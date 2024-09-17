@@ -1,0 +1,54 @@
+name: CI/CD for feat, develop and master branches
+
+on:
+  push:
+    branches:
+      - 'feat/**'
+      - develop
+      - master
+
+jobs:
+  lint-and-test:
+    if: startsWith(github.ref, 'refs/heads/feat/')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run ESLint
+        run: npm run lint
+
+      - name: Run Prettier
+        run: npm run format -- --check
+
+      - name: Run Tests
+        run: npm test
+
+  build-and-deploy:
+    if: github.ref == 'refs/heads/develop' || github.ref == 'refs/heads/master'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run tests
+        run: npm test
+
+      - name: Build project
+        run: npm run build
+
+      - name: Deploy based on branch
+        run: |
+          if [ "${{ github.ref }}" == "refs/heads/develop" ]; then
+            echo "Deploying to QA environment..."
+            npm run deploy:qa
+          elif [ "${{ github.ref }}" == "refs/heads/master" ]; then
+            echo "Deploying to Production environment..."
+            npm run deploy:prod
+          fi
