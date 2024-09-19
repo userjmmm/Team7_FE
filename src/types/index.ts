@@ -13,3 +13,13 @@ export type InfluencerData = {
   influencerJob: string;
   likes?: boolean;
 };
+
+export type SpotData = {
+  videoId: number;
+  videoAlias: string;
+  videoUrl: string;
+  place: {
+    placeId: number;
+    placeName: string;
+  };
+};

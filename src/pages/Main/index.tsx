@@ -1,7 +1,8 @@
 import styled from 'styled-components';
 
-import InfluencerSection from '@/components/features/Main/Influencer';
-import MainBanner from '@/components/features/Main/MainBanner.tsx';
+import BaseLayout from '@/components/features/Main/BaseLayout';
+import InfluencerSection from '@/components/features/Main/InfluencerSection';
+import MainBanner from '@/components/features/Main/MainBanner';
 
 import { BannerData, InfluencerData } from '@/types';
 
@@ -60,44 +61,73 @@ const influencersDummyData: InfluencerData[] = [
   {
     influencerId: 3,
     influencerName: '아이유',
-    influencerImgUrl: ' https://via.placeholder.com/100',
+    influencerImgUrl: 'https://via.placeholder.com/100',
     influencerJob: '가수',
     likes: true,
   },
   {
     influencerId: 4,
     influencerName: '이영자',
-    influencerImgUrl: ' https://via.placeholder.com/100',
+    influencerImgUrl: 'https://via.placeholder.com/100',
     influencerJob: '방송인',
     likes: false,
   },
   {
     influencerId: 5,
     influencerName: '정해인',
-    influencerImgUrl: ' https://via.placeholder.com/100',
+    influencerImgUrl: 'https://via.placeholder.com/100',
     influencerJob: '배우',
     likes: true,
   },
   {
     influencerId: 7,
     influencerName: '정해인',
-    influencerImgUrl: ' https://via.placeholder.com/100',
+    influencerImgUrl: 'https://via.placeholder.com/100',
     influencerJob: '배우',
     likes: true,
   },
   {
     influencerId: 8,
     influencerName: '정해인',
-    influencerImgUrl: ' https://via.placeholder.com/100',
+    influencerImgUrl: 'https://via.placeholder.com/100',
     influencerJob: '배우',
     likes: true,
   },
   {
     influencerId: 9,
     influencerName: '정해인',
-    influencerImgUrl: ' https://via.placeholder.com/100',
+    influencerImgUrl: 'https://via.placeholder.com/100',
     influencerJob: '배우',
     likes: true,
+  },
+];
+const SpotDummyData = [
+  {
+    videoId: 1,
+    videoAlias: '성시경이 갔다가 못 돌아온 바로 그곳',
+    videoUrl: 'https://via.placeholder.com/100',
+    place: {
+      placeId: 1,
+      placeName: '이선장네',
+    },
+  },
+  {
+    videoId: 2,
+    videoAlias: '해변의 잊지 못할 순간',
+    videoUrl: 'https://via.placeholder.com/100',
+    place: {
+      placeId: 2,
+      placeName: '해변',
+    },
+  },
+  {
+    videoId: 3,
+    videoAlias: '숲속의 비밀',
+    videoUrl: 'https://via.placeholder.com/100',
+    place: {
+      placeId: 3,
+      placeName: '숲속',
+    },
   },
 ];
 
@@ -105,14 +135,19 @@ export default function MainPage() {
   return (
     <Wrapper>
       <MainBanner items={bannerDummyData} />
-      <InfluencerSection influencers={influencersDummyData} />
-      {/* <FirstSpotSection />
-      <SecondSpotSection /> */}
+      <BaseLayout
+        type="influencer"
+        mainText="인플루언서"
+        SubText=" 가 방문한 장소를 찾아볼까요?"
+        items={influencersDummyData}
+      />
+      <BaseLayout type="Spot" prevSubText="지금 " mainText="쿨" SubText=" 한 그곳!" items={SpotDummyData} />
+      <BaseLayout type="Spot" mainText="새로" SubText=" 등록된 그곳!" items={SpotDummyData} />
     </Wrapper>
   );
 }
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 50px;
 `;
