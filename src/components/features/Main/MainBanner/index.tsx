@@ -3,7 +3,7 @@ import { GrPrevious, GrNext } from 'react-icons/gr';
 
 import styled from 'styled-components';
 
-import BannerItem from '@/components/features/Main/MainBanner.tsx/BannerItem';
+import BannerItem from '@/components/features/Main/MainBanner/BannerItem';
 
 import { BannerData } from '@/types';
 
