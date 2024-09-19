@@ -1,6 +1,9 @@
+import styled from 'styled-components';
+
+import InfluencerSection from '@/components/features/Main/Influencer';
 import MainBanner from '@/components/features/Main/MainBanner.tsx';
 
-import { BannerData } from '@/types';
+import { BannerData, InfluencerData } from '@/types';
 
 const bannerDummyData: BannerData[] = [
   {
@@ -39,14 +42,77 @@ const bannerDummyData: BannerData[] = [
     title: '바다에서의 하루',
   },
 ];
+const influencersDummyData: InfluencerData[] = [
+  {
+    influencerId: 1,
+    influencerName: '이하늬',
+    influencerImgUrl: ' https://via.placeholder.com/100',
+    influencerJob: '모델',
+    likes: true,
+  },
+  {
+    influencerId: 2,
+    influencerName: '박서준',
+    influencerImgUrl: ' https://via.placeholder.com/100',
+    influencerJob: '배우',
+    likes: false,
+  },
+  {
+    influencerId: 3,
+    influencerName: '아이유',
+    influencerImgUrl: ' https://via.placeholder.com/100',
+    influencerJob: '가수',
+    likes: true,
+  },
+  {
+    influencerId: 4,
+    influencerName: '이영자',
+    influencerImgUrl: ' https://via.placeholder.com/100',
+    influencerJob: '방송인',
+    likes: false,
+  },
+  {
+    influencerId: 5,
+    influencerName: '정해인',
+    influencerImgUrl: ' https://via.placeholder.com/100',
+    influencerJob: '배우',
+    likes: true,
+  },
+  {
+    influencerId: 7,
+    influencerName: '정해인',
+    influencerImgUrl: ' https://via.placeholder.com/100',
+    influencerJob: '배우',
+    likes: true,
+  },
+  {
+    influencerId: 8,
+    influencerName: '정해인',
+    influencerImgUrl: ' https://via.placeholder.com/100',
+    influencerJob: '배우',
+    likes: true,
+  },
+  {
+    influencerId: 9,
+    influencerName: '정해인',
+    influencerImgUrl: ' https://via.placeholder.com/100',
+    influencerJob: '배우',
+    likes: true,
+  },
+];
 
 export default function MainPage() {
   return (
-    <>
+    <Wrapper>
       <MainBanner items={bannerDummyData} />
-      {/* <InfluencerSection />
-      <FirstSpotSection />
+      <InfluencerSection influencers={influencersDummyData} />
+      {/* <FirstSpotSection />
       <SecondSpotSection /> */}
-    </>
+    </Wrapper>
   );
 }
+const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+`;
