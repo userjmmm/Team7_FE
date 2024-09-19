@@ -4,35 +4,36 @@ import styled from 'styled-components';
 
 import { Text } from '@/components/common/typography/Text';
 
-import InfluencerItem from './InfluencerItem';
-import { InfluencerData } from '@/types';
+import InfluencerSection from './InfluencerSection';
+import SpotSection from './SpotSection';
+import { InfluencerData, SpotData } from '@/types';
 
-export default function InfluencerSection({ influencers }: { influencers: InfluencerData[] }) {
+type Props = {
+  type: string;
+  prevSubText?: string;
+  mainText: string;
+  SubText: string;
+  items: InfluencerData[] | SpotData[];
+};
+export default function BaseLayout({ type, prevSubText = '', mainText, SubText, items }: Props) {
   const navigate = useNavigate();
   return (
     <Container>
       <TitleContainer>
         <Text size="l" weight="bold">
+          {prevSubText || ''}
           <Text size="xxl" weight="bold" variant="mint">
-            인플루언서
+            {mainText}
           </Text>
-          가 방문한 장소를 찾아볼까요?
+          {SubText}
         </Text>
-        <MoreBtn onClick={() => navigate('/influencer')}>더보기</MoreBtn>
+        {type === 'influencer' ? <MoreBtn onClick={() => navigate('/influencer')}>더보기</MoreBtn> : null}
       </TitleContainer>
-      <ListContainer>
-        {influencers.map((influencer) => {
-          return (
-            <InfluencerItem
-              key={influencer.influencerId}
-              influencerId={influencer.influencerId}
-              influencerName={influencer.influencerName}
-              influencerImgUrl={influencer.influencerImgUrl}
-              influencerJob={influencer.influencerJob}
-            />
-          );
-        })}
-      </ListContainer>
+      {type === 'influencer' ? (
+        <InfluencerSection items={items as InfluencerData[]} />
+      ) : (
+        <SpotSection items={items as SpotData[]} />
+      )}
     </Container>
   );
 }
@@ -40,7 +41,7 @@ const Container = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 30px;
 `;
 const TitleContainer = styled.div`
   display: flex;
