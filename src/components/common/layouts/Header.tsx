@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 import styled from 'styled-components';
 
-import { Text } from '../typography/Text';
+import { Text } from '@/components/common/typography/Text';
 
 export default function Header() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
