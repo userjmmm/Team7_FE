@@ -2,8 +2,6 @@ import { useState } from 'react';
 
 import styled from 'styled-components';
 
-import { Text } from '@/components/common/typography/Text';
-
 interface SearchBarProps {
   placeholder?: string;
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
@@ -22,12 +20,12 @@ export default function SearchBar({ placeholder = '키워드를 입력해주세�
   return (
     <SearchBarContainer>
       <SearchInputWrapper>
-        {!inputValue && (
-          <StyledText size="s" weight="normal" variant="grey">
-            {placeholder}
-          </StyledText>
-        )}
-        <SearchInput type="text" value={inputValue} onChange={handleInputChange} />
+        <SearchInput
+            type="text"
+            value={inputValue}
+            onChange={handleInputChange}
+            placeholder={placeholder}
+          />
       </SearchInputWrapper>
       <SearchIconWrapper />
     </SearchBarContainer>
@@ -38,12 +36,12 @@ const SearchBarContainer = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  padding: 13.4118px;
-  gap: 27.66px;
-  width: 992.51px;
+  padding: 12px;
+  gap: 28px;
+  width: 992px;
   height: 48px;
   background: #ffffff;
-  border-radius: 16.7648px;
+  border-radius: 16px;
 `;
 
 const SearchInputWrapper = styled.div`
@@ -66,15 +64,11 @@ const SearchInput = styled.input`
   outline: none;
   z-index: 1;
   position: relative;
-`;
 
-const StyledText = styled(Text)`
-  position: absolute;
-  top: 50%;
-  left: 10px;
-  transform: translateY(-50%);
-  pointer-events: none;
-  z-index: 0;
+  &::placeholder {
+    color: grey;
+    font-weight: normal;
+  }
 `;
 
 const SearchIconWrapper = styled.div`
