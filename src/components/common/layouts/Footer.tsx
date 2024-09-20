@@ -83,7 +83,6 @@ const FooterContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  padding: 20px;
   background: #2f2f2f;
   width: 100%;
 `;
