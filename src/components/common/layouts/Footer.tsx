@@ -1,6 +1,8 @@
 import { Link } from 'react-router-dom';
+
 import styled from 'styled-components';
-import { Text } from '../typography/Text';
+
+import { Text } from '@/components/common/typography/Text';
 
 export default function Footer() {
   return (
@@ -82,7 +84,7 @@ const FooterContainer = styled.div`
   flex-direction: column;
   align-items: flex-start;
   padding: 20px;
-  background: #2F2F2F;
+  background: #2f2f2f;
   width: 100%;
 `;
 
