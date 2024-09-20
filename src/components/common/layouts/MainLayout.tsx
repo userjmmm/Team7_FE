@@ -27,5 +27,5 @@ const InnerWrapper = styled.div`
   position: absolute;
   top: 0;
   left: 0;
-  margin-top: ${HEADER_HEIGHT};
+  margin-top: ${HEADER_HEIGHT}px;
 `;
