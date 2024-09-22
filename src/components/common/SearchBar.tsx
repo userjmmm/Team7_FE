@@ -80,10 +80,10 @@ const SearchIconWrapper = styled.div`
   &::before {
     content: '';
     position: absolute;
-    left: 12.5%;
-    right: 14.62%;
-    top: 12.5%;
-    bottom: 14.63%;
+    left: 12%;
+    right: 14%;
+    top: 12%;
+    bottom: 14%;
     background-color: #55ebff;
     mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M23.384,21.619,16.855,15.09a9.284,9.284,0,1,0-1.768,1.768l6.529,6.529a1.266,1.266,0,0,0,1.768,0A1.251,1.251,0,0,0,23.384,21.619ZM2.75,9.5a6.75,6.75,0,1,1,6.75,6.75A6.758,6.758,0,0,1,2.75,9.5Z'/%3E%3C/svg%3E")
       center / contain no-repeat;
