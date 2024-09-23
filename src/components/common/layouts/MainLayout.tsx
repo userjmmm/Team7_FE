@@ -18,7 +18,8 @@ export default function MainLayout() {
 }
 
 const Wrapper = styled.div`
-  width: 100%;
+  width: 1100px;
+  margin: 0 auto;
   position: relative;
 `;
 
@@ -27,5 +28,5 @@ const InnerWrapper = styled.div`
   position: absolute;
   top: 0;
   left: 0;
-  margin-top: ${HEADER_HEIGHT};
+  margin-top: ${HEADER_HEIGHT}px;
 `;
