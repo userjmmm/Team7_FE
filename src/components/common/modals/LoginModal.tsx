@@ -1,3 +1,5 @@
+import { useState } from 'react';
+import ReactDOM from 'react-dom';
 import { FaComment } from 'react-icons/fa';
 
 import styled from 'styled-components';
@@ -5,33 +7,63 @@ import styled from 'styled-components';
 import { Paragraph } from '@/components/common/typography/Paragraph';
 import { Text } from '@/components/common/typography/Text';
 
-export default function LoginModal() {
-  return (
-    <ModalContainer>
-      <CloseButton>X</CloseButton>
-      <Logo src="src/assets/images/Logo.svg" alt="인플레이스 로고" />
-      <TitleWrapper>
-        <Paragraph size="xl" weight="bold">
-          인 플레이스
-        </Paragraph>
-      </TitleWrapper>
-      <KakaoLoginButton>
-        <FaComment />
-        <span>
-          <Text size="s" weight="normal">
-            카카오 로그인
-          </Text>
-        </span>
-      </KakaoLoginButton>
-    </ModalContainer>
+type LoginModalProps = {
+  children: (openModal: () => void) => React.ReactNode;
+};
+
+export default function LoginModal({ children }: LoginModalProps) {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const openModal = () => setIsOpen(true);
+  const closeModal = () => setIsOpen(false);
+
+  if (!isOpen) {
+    return children(openModal);
+  }
+
+  return ReactDOM.createPortal(
+    <ModalOverlay>
+      <ModalContainer>
+        <CloseButton onClick={closeModal}>X</CloseButton>
+        <Logo src="src/assets/images/Logo.svg" alt="인플레이스 로고" />
+        <TitleWrapper>
+          <Paragraph size="xl" weight="bold">
+            인 플레이스
+          </Paragraph>
+        </TitleWrapper>
+        <KakaoLoginButton>
+          <FaComment />
+          <span>
+            <Text size="s" weight="normal">
+              카카오 로그인
+            </Text>
+          </span>
+        </KakaoLoginButton>
+      </ModalContainer>
+    </ModalOverlay>,
+    document.body,
   );
 }
+
+const ModalOverlay = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
 
 const ModalContainer = styled.div`
   position: relative;
   width: 426px;
   height: 540px;
   background: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 `;
 
 const CloseButton = styled.button`
@@ -74,7 +106,7 @@ const KakaoLoginButton = styled.button`
   cursor: pointer;
   display: flex;
   align-items: center;
-  justify-contnet: center;
+  justify-content: center;
   padding: 0 20px;
 
   svg {
