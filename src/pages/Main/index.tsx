@@ -104,7 +104,7 @@ const SpotDummyData = [
   {
     videoId: 1,
     videoAlias: '성시경이 갔다가 못 돌아온 바로 그곳',
-    videoUrl: 'https://via.placeholder.com/100',
+    videoUrl: 'https://youtu.be/qbqquv_8wM0?si=j7LiU5DSfTVpKa1I',
     place: {
       placeId: 1,
       placeName: '이선장네',
@@ -113,7 +113,7 @@ const SpotDummyData = [
   {
     videoId: 2,
     videoAlias: '해변의 잊지 못할 순간',
-    videoUrl: 'https://via.placeholder.com/100',
+    videoUrl: 'https://youtu.be/qbqquv_8wM0?si=j7LiU5DSfTVpKa1I',
     place: {
       placeId: 2,
       placeName: '해변',
@@ -122,7 +122,7 @@ const SpotDummyData = [
   {
     videoId: 3,
     videoAlias: '숲속의 비밀',
-    videoUrl: 'https://via.placeholder.com/100',
+    videoUrl: 'https://youtu.be/qbqquv_8wM0?si=j7LiU5DSfTVpKa1I',
     place: {
       placeId: 3,
       placeName: '숲속',

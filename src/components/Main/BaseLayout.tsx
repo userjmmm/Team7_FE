@@ -15,6 +15,7 @@ type Props = {
   SubText: string;
   items: InfluencerData[] | SpotData[];
 };
+
 export default function BaseLayout({ type, prevSubText = '', mainText, SubText, items }: Props) {
   const navigate = useNavigate();
   return (
