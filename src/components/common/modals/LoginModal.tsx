@@ -17,6 +17,24 @@ export default function LoginModal({ children }: LoginModalProps) {
   const openModal = () => setIsOpen(true);
   const closeModal = () => setIsOpen(false);
 
+  const handleKakaoLogin = async () => {
+    try {
+      const response = await fetch('/auth2/authorization/kakao', {
+        method: 'GET',
+        credentials: 'include',
+      });
+
+      if (response.ok) {
+        const redirectUrl = await response.text();
+        window.location.href = redirectUrl;
+      } else {
+        console.error('카카오 로그인 요청 실패');
+      }
+    } catch (error) {
+      console.error('카카오 로그인 요청 중 오류 발생:', error);
+    }
+  };
+
   if (!isOpen) {
     return children(openModal);
   }
@@ -31,7 +49,7 @@ export default function LoginModal({ children }: LoginModalProps) {
             인 플레이스
           </Paragraph>
         </TitleWrapper>
-        <KakaoLoginButton>
+        <KakaoLoginButton onClick={handleKakaoLogin}>
           <FaComment />
           <span>
             <Text size="s" weight="normal">
