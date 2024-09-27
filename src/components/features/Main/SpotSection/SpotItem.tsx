@@ -7,12 +7,12 @@ import { Paragraph } from '@/components/common/typography/Paragraph';
 
 import { SpotData } from '@/types';
 
-export default function SpotItem({ videoId, videoAlias, videoUrl, place }: SpotData) {
-  function extractYoutubeVideoId(url: string) {
-    const match = url.match(/(?:https?:\/\/)?(?:www\.)?youtu(?:be\.com\/watch\?v=|\.be\/)([\w-]*)(&(amp;)?[\w?=]*)?/);
-    return match && match[1] ? match[1] : null;
-  }
+function extractYoutubeVideoId(url: string) {
+  const match = url.match(/(?:https?:\/\/)?(?:www\.)?youtu(?:be\.com\/watch\?v=|\.be\/)([\w-]*)(&(amp;)?[\w?=]*)?/);
+  return match && match[1] ? match[1] : null;
+}
 
+export default function SpotItem({ videoId, videoAlias, videoUrl, place }: SpotData) {
   return (
     <Wrapper to={`/detail/${place.placeId}`}>
       <Image
