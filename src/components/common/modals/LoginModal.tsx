@@ -51,11 +51,9 @@ export default function LoginModal({ children }: LoginModalProps) {
         </TitleWrapper>
         <KakaoLoginButton onClick={handleKakaoLogin}>
           <FaComment />
-          <span>
             <Text size="s" weight="normal">
               카카오 로그인
             </Text>
-          </span>
         </KakaoLoginButton>
       </ModalContainer>
     </ModalOverlay>,
