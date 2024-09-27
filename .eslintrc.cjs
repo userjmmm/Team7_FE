@@ -22,7 +22,8 @@ module.exports = {
   plugins: ['react-refresh', '@typescript-eslint'],
   rules: {
     'import/extensions': 'off',
-    "react/require-default-props": "off",
+    'react/jsx-props-no-spreading': 'off',
+    'react/require-default-props': 'off',
     'react/react-in-jsx-scope': 'off',
     'react/jsx-filename-extension': ['warn', { extensions: ['.tsx', '.js', '.jsx'] }],
     'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],

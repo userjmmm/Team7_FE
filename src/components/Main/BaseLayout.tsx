@@ -15,6 +15,7 @@ type Props = {
   SubText: string;
   items: InfluencerData[] | SpotData[];
 };
+
 export default function BaseLayout({ type, prevSubText = '', mainText, SubText, items }: Props) {
   const navigate = useNavigate();
   return (
@@ -55,18 +56,4 @@ const MoreBtn = styled.button`
   background: none;
   border: none;
   cursor: pointer;
-`;
-const ListContainer = styled.div`
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  gap: 40px;
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  scroll-behavior: smooth;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-  &::-webkit-scrollbar {
-    display: none;
-  }
 `;

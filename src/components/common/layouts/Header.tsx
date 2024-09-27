@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 
 import styled from 'styled-components';
 
+import LoginModal from '@/components/common/modals/LoginModal';
 import { Text } from '@/components/common/typography/Text';
 
 export default function Header() {
@@ -37,7 +38,7 @@ export default function Header() {
                 인플루언서
               </Text>
             </NavItem>
-            <LoginButton onClick={handleLoginToggle}>로그인</LoginButton>
+            <LoginModal>{(openModal) => <LoginButton onClick={openModal}>로그인</LoginButton>}</LoginModal>
           </>
         )}
       </Nav>

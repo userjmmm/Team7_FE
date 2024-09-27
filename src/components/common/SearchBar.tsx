@@ -20,12 +20,7 @@ export default function SearchBar({ placeholder = '키워드를 입력해주세�
   return (
     <SearchBarContainer>
       <SearchInputWrapper>
-        <SearchInput
-            type="text"
-            value={inputValue}
-            onChange={handleInputChange}
-            placeholder={placeholder}
-          />
+        <SearchInput type="text" value={inputValue} onChange={handleInputChange} placeholder={placeholder} />
       </SearchInputWrapper>
       <SearchIconWrapper />
     </SearchBarContainer>
