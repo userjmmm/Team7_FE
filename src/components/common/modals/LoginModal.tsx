@@ -45,7 +45,7 @@ export default function LoginModal({ children }: LoginModalProps) {
         <CloseButton onClick={closeModal}>X</CloseButton>
         <Logo src="src/assets/images/Logo.svg" alt="인플레이스 로고" />
         <TitleWrapper>
-          <Paragraph size="xl" weight="bold">
+          <Paragraph size="l" weight="bold">
             인 플레이스
           </Paragraph>
         </TitleWrapper>
