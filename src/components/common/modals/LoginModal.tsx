@@ -7,6 +7,8 @@ import styled from 'styled-components';
 import { Paragraph } from '@/components/common/typography/Paragraph';
 import { Text } from '@/components/common/typography/Text';
 
+import getBaseUrl from '@/api/instance';
+
 type LoginModalProps = {
   children: (openModal: () => void) => React.ReactNode;
 };
@@ -17,22 +19,9 @@ export default function LoginModal({ children }: LoginModalProps) {
   const openModal = () => setIsOpen(true);
   const closeModal = () => setIsOpen(false);
 
-  const handleKakaoLogin = async () => {
-    try {
-      const response = await fetch('/auth2/authorization/kakao', {
-        method: 'GET',
-        credentials: 'include',
-      });
-
-      if (response.ok) {
-        const redirectUrl = await response.text();
-        window.location.href = redirectUrl;
-      } else {
-        console.error('카카오 로그인 요청 실패');
-      }
-    } catch (error) {
-      console.error('카카오 로그인 요청 중 오류 발생:', error);
-    }
+  const handleKakaoLogin = () => {
+    const baseUrl = getBaseUrl();
+    window.location.href = `${baseUrl}/oauth2/authorization/kakao`;
   };
 
   if (!isOpen) {
@@ -43,7 +32,7 @@ export default function LoginModal({ children }: LoginModalProps) {
     <ModalOverlay>
       <ModalContainer>
         <CloseButton onClick={closeModal}>X</CloseButton>
-        <Logo src="src/assets/images/Logo.svg" alt="인플레이스 로고" />
+        <Logo src="/src/assets/images/Logo.svg" alt="인플레이스 로고" />
         <TitleWrapper>
           <Paragraph size="l" weight="bold">
             인 플레이스
