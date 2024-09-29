@@ -11,9 +11,10 @@ import getBaseUrl from '@/api/instance';
 
 type LoginModalProps = {
   children: (openModal: () => void) => React.ReactNode;
+  currentPath: string;
 };
 
-export default function LoginModal({ children }: LoginModalProps) {
+export default function LoginModal({ children, currentPath }: LoginModalProps) {
   const [isOpen, setIsOpen] = useState(false);
 
   const openModal = () => setIsOpen(true);
@@ -21,6 +22,7 @@ export default function LoginModal({ children }: LoginModalProps) {
 
   const handleKakaoLogin = () => {
     const baseUrl = getBaseUrl();
+    localStorage.setItem('redirectPath', currentPath);
     window.location.href = `${baseUrl}/oauth2/authorization/kakao`;
   };
 

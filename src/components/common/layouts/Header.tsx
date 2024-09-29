@@ -1,6 +1,7 @@
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
+import Cookies from 'js-cookie';
 import styled from 'styled-components';
 
 import LoginModal from '@/components/common/modals/LoginModal';
@@ -8,9 +9,19 @@ import { Text } from '@/components/common/typography/Text';
 
 export default function Header() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const location = useLocation();
+  const navigate = useNavigate();
 
-  const handleLoginToggle = () => {
-    setIsLoggedIn(!isLoggedIn);
+  useEffect(() => {
+    const accessToken = Cookies.get('access_token');
+    setIsLoggedIn(!!accessToken);
+  }, []);
+
+  const handleLogout = () => {
+    Cookies.remove('access_token');
+    Cookies.remove('refresh_token');
+    setIsLoggedIn(false);
+    navigate('/');
   };
 
   return (
@@ -29,7 +40,7 @@ export default function Header() {
                 마이페이지
               </Text>
             </NavItem>
-            <LoginButton onClick={handleLoginToggle}>로그아웃</LoginButton>
+            <LoginButton onClick={handleLogout}>로그아웃</LoginButton>
           </>
         ) : (
           <>
@@ -38,7 +49,9 @@ export default function Header() {
                 인플루언서
               </Text>
             </NavItem>
-            <LoginModal>{(openModal) => <LoginButton onClick={openModal}>로그인</LoginButton>}</LoginModal>
+            <LoginModal currentPath={location.pathname}>
+              {(openModal) => <LoginButton onClick={openModal}>로그인</LoginButton>}
+            </LoginModal>
           </>
         )}
       </Nav>
