@@ -80,11 +80,12 @@ export default function Footer() {
 }
 
 const FooterContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
+  // display: flex;
+  // flex-direction: column;
+  // align-items: flex-start;
   background: #2f2f2f;
   width: 100%;
+  padding: 30px;
 `;
 
 const FooterSection = styled.div`

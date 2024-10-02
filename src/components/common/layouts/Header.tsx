@@ -60,16 +60,15 @@ export default function Header() {
     </HeaderContainer>
   );
 }
-export const HEADER_HEIGHT = 60;
+export const HEADER_HEIGHT = 80;
 
 const HeaderContainer = styled.header`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 20px;
-  height: 60px;
-  background-color: #292929;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  height: 80px;
+  box-sizing: border-box;
 `;
 
 const LogoContainer = styled.div`
