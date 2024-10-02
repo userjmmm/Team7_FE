@@ -7,8 +7,9 @@ import styled from 'styled-components';
 import { Paragraph } from '@/components/common/typography/Paragraph';
 import { Text } from '@/components/common/typography/Text';
 
+import Logo from '@/assets/images/Logo.svg';
+
 import getBaseUrl from '@/api/instance';
-import Logo from "@/assets/images/Logo.svg";
 
 type LoginModalProps = {
   children: (openModal: () => void) => React.ReactNode;

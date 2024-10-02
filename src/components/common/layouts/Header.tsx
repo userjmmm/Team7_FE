@@ -7,7 +7,7 @@ import styled from 'styled-components';
 import LoginModal from '@/components/common/modals/LoginModal';
 import { Text } from '@/components/common/typography/Text';
 
-import Logo from "@/assets/images/Logo.svg";
+import Logo from '@/assets/images/Logo.svg';
 
 export default function Header() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
