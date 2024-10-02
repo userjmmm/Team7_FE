@@ -7,6 +7,8 @@ import styled from 'styled-components';
 import LoginModal from '@/components/common/modals/LoginModal';
 import { Text } from '@/components/common/typography/Text';
 
+import Logo from "@/assets/images/Logo.svg";
+
 export default function Header() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const location = useLocation();
@@ -27,7 +29,7 @@ export default function Header() {
   return (
     <HeaderContainer>
       <LogoContainer>
-        <Logo src="src/assets/images/Logo.svg" alt="인플레이스 로고" />
+        <LogoImage src={Logo} alt="인플레이스 로고" />
         <Text size="l" weight="bold" variant="mint">
           인 플레이스
         </Text>
@@ -75,7 +77,7 @@ const LogoContainer = styled.div`
   align-items: center;
 `;
 
-const Logo = styled.img`
+const LogoImage = styled.img`
   height: 40px;
   margin-right: 20px;
 `;
