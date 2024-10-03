@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 type Props = {
-  theme?: 'kakao' | 'outline' | 'white' | 'mint' | 'visit';
+  theme?: 'kakao' | 'outline' | 'white' | 'mint' | 'visit' | 'blackOutline';
   size?: 'large' | 'small' | 'responsive';
 } & React.ButtonHTMLAttributes<HTMLButtonElement>;
 
@@ -54,6 +54,17 @@ const Wrapper = styled.button<Pick<Props, 'theme' | 'size'>>(
 
         '&:hover': {
           backgroundColor: '#1b1a1a',
+        },
+      };
+    }
+    if (theme === 'blackOutline') {
+      return {
+        boxShadow: '0 0 0 1px #000000 inset',
+        color: '#000000',
+        background: 'none',
+
+        '&:hover': {
+          backgroundColor: '#f4f4f4',
         },
       };
     }
