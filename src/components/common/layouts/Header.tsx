@@ -60,13 +60,13 @@ export default function Header() {
     </HeaderContainer>
   );
 }
-export const HEADER_HEIGHT = 80;
+export const HEADER_HEIGHT = 90;
 
 const HeaderContainer = styled.header`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 20px;
+  padding: 20px 0;
   height: 80px;
   box-sizing: border-box;
 `;
