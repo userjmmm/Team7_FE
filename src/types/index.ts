@@ -23,3 +23,20 @@ export type SpotData = {
     placeName: string;
   };
 };
+
+export type AddressData = {
+  address1: string;
+  address2: string;
+  address3: string;
+};
+
+export type PlaceData = {
+  placeId: number;
+  placeName: string;
+  address: AddressData;
+  category?: string;
+  influencerName: string;
+  longitude?: string;
+  latitude?: string;
+  likes: boolean;
+};

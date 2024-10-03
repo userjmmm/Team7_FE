@@ -41,6 +41,7 @@ const MapContainer = styled.div`
   position: relative;
   width: 100%;
   height: 570px;
+  padding: 20px 0;
 `;
 
 const ButtonContainer = styled.div`
