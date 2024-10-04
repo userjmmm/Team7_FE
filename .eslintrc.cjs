@@ -11,6 +11,7 @@ module.exports = {
     'airbnb-typescript',
     'plugin:prettier/recommended',
     'plugin:@typescript-eslint/recommended',
+    'prettier',
   ],
   parser: '@typescript-eslint/parser',
   parserOptions: {
@@ -22,6 +23,7 @@ module.exports = {
   plugins: ['react-refresh', '@typescript-eslint'],
   rules: {
     'import/extensions': 'off',
+    'import/no-extraneous-dependencies': 'off',
     'react/jsx-props-no-spreading': 'off',
     'react/require-default-props': 'off',
     'react/react-in-jsx-scope': 'off',
