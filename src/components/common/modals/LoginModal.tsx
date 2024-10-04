@@ -9,7 +9,7 @@ import { Text } from '@/components/common/typography/Text';
 
 import Logo from '@/assets/images/Logo.svg';
 
-import getBaseUrl from '@/api/instance';
+import { BASE_URL } from '@/api/instance';
 
 type LoginModalProps = {
   children: (openModal: () => void) => React.ReactNode;
@@ -23,9 +23,8 @@ export default function LoginModal({ children, currentPath }: LoginModalProps) {
   const closeModal = () => setIsOpen(false);
 
   const handleKakaoLogin = () => {
-    const baseUrl = getBaseUrl();
     localStorage.setItem('redirectPath', currentPath);
-    window.location.href = `${baseUrl}/oauth2/authorization/kakao`;
+    window.location.href = `${BASE_URL}/oauth2/authorization/kakao`;
   };
 
   if (!isOpen) {
