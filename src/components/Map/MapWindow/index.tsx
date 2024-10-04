@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { FaUndoAlt } from 'react-icons/fa';
 import { Map, MapMarker } from 'react-kakao-maps-sdk';
 
 import styled from 'styled-components';
@@ -20,6 +21,12 @@ export default function MapWindow() {
     }
   };
 
+  const handleResetCenter = () => {
+    if (map) {
+      map.setCenter(new kakao.maps.LatLng(center.lat, center.lng));
+    }
+  };
+
   return (
     <MapContainer>
       <ButtonContainer>
@@ -37,6 +44,16 @@ export default function MapWindow() {
           />
         )}
       </Map>
+      <ResetButtonContainer>
+        <Button
+          onClick={handleResetCenter}
+          theme="mint"
+          size="small"
+          style={{ width: '40px', height: '40px', borderRadius: '50%' }}
+        >
+          <FaUndoAlt />
+        </Button>
+      </ResetButtonContainer>
     </MapContainer>
   );
 }
@@ -53,5 +70,12 @@ const ButtonContainer = styled.div`
   top: 30px;
   left: 50%;
   transform: translateX(-50%);
+  z-index: 10;
+`;
+
+const ResetButtonContainer = styled.div`
+  position: absolute;
+  bottom: 30px;
+  right: 30px;
   z-index: 10;
 `;
