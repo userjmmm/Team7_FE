@@ -6,13 +6,17 @@ import { Text } from '@/components/common/typography/Text';
 
 import { PlaceData } from '@/types';
 
-export default function PlaceItem({ placeId, placeName, address, influencerName, likes }: PlaceData) {
+interface PlaceItemProps extends PlaceData {
+  onClick: () => void;
+}
+
+export default function PlaceItem({ placeId, placeName, address, influencerName, likes, onClick }: PlaceItemProps) {
   const getFullAddress = (addr: PlaceData['address']) => {
     return [addr.address1, addr.address2, addr.address3].filter(Boolean).join(' ');
   };
 
   return (
-    <PlaceCard key={placeId}>
+    <PlaceCard key={placeId} onClick={onClick}>
       <PlaceImage src="https://via.placeholder.com/100" alt={placeName} />
       <CardContent>
         <PlaceDetails>

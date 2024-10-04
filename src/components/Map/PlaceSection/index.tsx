@@ -1,3 +1,5 @@
+import { useNavigate } from 'react-router-dom';
+
 import styled from 'styled-components';
 
 import PlaceItem from '@/components/Map/PlaceSection/PlaceItem';
@@ -5,19 +7,16 @@ import PlaceItem from '@/components/Map/PlaceSection/PlaceItem';
 import { PlaceData } from '@/types';
 
 export default function PlaceSection({ items }: { items: PlaceData[] }) {
+  const navigate = useNavigate();
+
+  const handlePlaceClick = (placeId: number) => {
+    navigate(`/detail/${placeId}`);
+  };
+
   return (
     <ListContainer>
       {items.map((place) => {
-        return (
-          <PlaceItem
-            key={place.placeId}
-            placeId={place.placeId}
-            placeName={place.placeName}
-            address={place.address}
-            influencerName={place.influencerName}
-            likes={place.likes}
-          />
-        );
+        return <PlaceItem key={place.placeId} {...place} onClick={() => handlePlaceClick(place.placeId)} />;
       })}
     </ListContainer>
   );
