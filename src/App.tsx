@@ -20,7 +20,7 @@ function App() {
           <Route index path="/" element={<MainPage />} />
           <Route path="/influencer" element={<InfluencerPage />} />
           <Route path="/map" element={<MapPage />} />
-          <Route path="/detail" element={<DetailPage />} />
+          <Route path="/detail/:id" element={<DetailPage />} />
           <Route path="/my" element={<MyPage />} />
         </Route>
 

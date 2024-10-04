@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 type Props = {
-  theme?: 'kakao' | 'outline' | 'white' | 'mint' | 'visit';
+  theme?: 'kakao' | 'outline' | 'white' | 'mint' | 'visit' | 'blackOutline';
   size?: 'large' | 'small' | 'responsive';
 } & React.ButtonHTMLAttributes<HTMLButtonElement>;
 
@@ -57,6 +57,17 @@ const themeStyles = (theme: Props['theme'] = 'mint') => {
       },
     };
   }
+  if (theme === 'blackOutline') {
+    return {
+      boxShadow: '0 0 0 1px #000000 inset',
+      color: '#000000',
+      background: 'none',
+
+      '&:hover': {
+        backgroundColor: '#f4f4f4',
+      },
+    };
+  }
 
   if (theme === 'white') {
     return {
@@ -95,9 +106,8 @@ const themeStyles = (theme: Props['theme'] = 'mint') => {
   return {
     color: '#000',
     backgroundColor: '#55EBFF',
-
     '&:hover': {
-      backgroundColor: '#3da3b1',
+      backgroundColor: '#1b1a1a',
     },
   };
 };
