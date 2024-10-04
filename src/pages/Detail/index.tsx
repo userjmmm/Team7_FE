@@ -4,6 +4,7 @@ import { RiKakaoTalkFill } from 'react-icons/ri';
 
 import styled from 'styled-components';
 
+import { useParams } from 'react-router-dom';
 import Button from '@/components/common/Button';
 import { Text } from '@/components/common/typography/Text';
 import InfoTap from '@/components/features/Detail/InfoTap';
@@ -11,21 +12,23 @@ import ReviewTap from '@/components/features/Detail/ReviewTap';
 import VisitModal from '@/components/features/Detail/VisitModal';
 
 import useExtractYoutubeVideoId from '@/hooks/useExtractYoutube';
+import { useGetDetail } from '@/api/hooks/useGetDetail';
 
 export default function DetailPage() {
   const [activeTab, setActiveTab] = useState<'info' | 'review'>('info');
   const [visitModal, setVisitModal] = useState(false);
-  const videoUrl = 'https://youtu.be/qbqquv_8wM0?si=j7LiU5DSfTVpKa1I';
+  const { id } = useParams() as { id: string };
+  const [{ data: infoData }, { data: list }] = useGetDetail(id);
 
   return (
     <Wrapper>
       <Image
-        src={`https://img.youtube.com/vi/${useExtractYoutubeVideoId(videoUrl)}/maxresdefault.jpg`}
+        src={`https://img.youtube.com/vi/${useExtractYoutubeVideoId(infoData.videoUrl)}/maxresdefault.jpg`}
         alt="장소사진"
       />
       <TitleContainer>
         <Text size="xl" weight="bold" variant="white">
-          료코
+          {infoData.placeName}
         </Text>
         <ButtonWrapper>
           <Button
@@ -54,8 +57,14 @@ export default function DetailPage() {
           리뷰
         </Tap>
       </TapContainer>
-      <InfoContainer>{activeTab === 'info' ? <InfoTap /> : <ReviewTap />}</InfoContainer>
-      {visitModal ? <VisitModal placeName="료코" setVisitModal={setVisitModal} /> : null}
+      <InfoContainer>
+        {activeTab === 'info' ? (
+          <InfoTap facilityInfo={infoData.facilityInfo} openHour={infoData.openHour} menuInfos={infoData.menuInfos} />
+        ) : (
+          <ReviewTap placeLikes={infoData.placeLikes} list={list} />
+        )}
+      </InfoContainer>
+      {visitModal ? <VisitModal placeName={infoData.placeName} setVisitModal={setVisitModal} /> : null}
     </Wrapper>
   );
 }
@@ -84,6 +93,7 @@ const Tap = styled.button<{ active: boolean }>`
   border: none;
   border-bottom: 3px solid ${({ active }) => (active ? '#55ebff' : 'white')};
   background: none;
+  cursor: pointer;
   transition:
     color 0.3s ease,
     border-bottom 0.3s ease;

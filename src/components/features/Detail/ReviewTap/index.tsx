@@ -6,45 +6,14 @@ import { Paragraph } from '@/components/common/typography/Paragraph';
 
 import BarGraph from './BarGraph';
 import Review from './Review';
+import { PlaceLikes, ReviewData } from '@/types';
 
-const list = [
-  {
-    reviewId: 1,
-    likes: true,
-    comment: '정말 좋았어요! 다음에 또 오고 싶습니다',
-    userNickname: '사용자1',
-    createdDate: new Date('2024-10-01T12:00:00Z'),
-  },
-  {
-    reviewId: 2,
-    likes: false,
-    comment: '별로였어요. 개선이 필요합니다.',
-    userNickname: '사용자2',
-    createdDate: new Date('2024-10-02T15:30:00Z'),
-  },
-  {
-    reviewId: 3,
-    likes: true,
-    comment: '맛있고 분위기도 좋았습니다',
-    userNickname: '사용자3',
-    createdDate: new Date('2024-10-03T09:15:00Z'),
-  },
-  {
-    reviewId: 4,
-    likes: false,
-    comment: '서비스가 아쉬웠습니다',
-    userNickname: '사용자4',
-    createdDate: new Date('2024-10-03T11:45:00Z'),
-  },
-];
-export default function ReviewTap() {
-  const like = 120;
-  const dislike = 10;
+export default function ReviewTap({ placeLikes, list }: { placeLikes: PlaceLikes; list: ReviewData[] }) {
   return (
     <Wrapper>
       <CountLike>
         <AiFillLike size={50} color="#fe7373" />
-        <BarGraph likes={like} dislikes={dislike} />
+        <BarGraph like={placeLikes.like} dislike={placeLikes.dislike} />
         <AiFillDislike size={50} color="#6F6CFF" />
       </CountLike>
       <Paragraph size="m" weight="bold" variant="white">
