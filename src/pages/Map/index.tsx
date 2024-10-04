@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import DropdownMenu from '@/components/Map/DropdownMenu';
 import MapWindow from '@/components/Map/MapWindow';
 import PlaceSection from '@/components/Map/PlaceSection';
+import ToggleButton from '@/components/Map/ToggleButton';
 import { Text } from '@/components/common/typography/Text';
 
 import { PlaceData } from '@/types';
@@ -232,6 +233,8 @@ export default function MapPage() {
           type="influencer"
         />
       </DropdownContainer>
+      <ToggleButton options={['맛집', '카페', '팝업']} onSelect={(selected) => console.log(selected)} />
+      {/* 콘솔 삭제 예정 */}
       <MapWindow />
       <PlaceSection items={dummyPlaces} />
     </PageContainer>
