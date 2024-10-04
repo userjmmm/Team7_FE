@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
-import BaseLayout from '@/components/features/Main/BaseLayout';
-import MainBanner from '@/components/features/Main/MainBanner';
+import BaseLayout from '@/components/Main/BaseLayout';
+import MainBanner from '@/components/Main/MainBanner';
 
 import { BannerData, InfluencerData } from '@/types';
 
