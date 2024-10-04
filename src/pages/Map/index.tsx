@@ -239,7 +239,7 @@ export default function MapPage() {
 }
 
 const PageContainer = styled.div`
-  padding: 5px 0;
+  padding: 6px 0;
 `;
 
 const DropdownContainer = styled.div`

@@ -109,9 +109,9 @@ const DropdownContainer = styled.div<{ type: 'location' | 'influencer' }>`
 
 const DropdownButton = styled.button<{ isOpen: boolean }>`
   width: 100%;
-  padding: 10px 15px;
+  padding: 10px 14px;
   background: #ffffff;
-  border: 1px solid rgba(0, 0, 0, 0.1);
+  border: 2px solid rgba(0, 0, 0, 0.1);
   border-radius: 8px;
   display: flex;
   justify-content: space-between;
@@ -135,7 +135,7 @@ const DropdownMenuContainer = styled.div<{ multiLevel: boolean; hasSubOptions: b
   left: 0;
   width: ${(props) => (props.multiLevel && props.hasSubOptions ? '200%' : '100%')};
   background: #ffffff;
-  border: 1px solid rgba(0, 0, 0, 0.1);
+  border: 2px solid rgba(0, 0, 0, 0.1);
   border-radius: 8px;
   margin-top: 4px;
   max-height: 300px;
@@ -154,7 +154,7 @@ const SearchInput = styled.input`
   padding: 10px;
   padding-right: 30px;
   border: none;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  border-bottom: 2px solid rgba(0, 0, 0, 0.1);
   outline: none;
   font-size: 14px;
   box-sizing: border-box;

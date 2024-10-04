@@ -18,7 +18,7 @@ export default function DropdownItem({ label, onClick, children, type, isSelecte
 }
 
 const DropdownItems = styled.div<{ type: 'location' | 'influencer'; isSelected?: boolean }>`
-  padding: 10px 15px;
+  padding: 10px 16px;
   cursor: pointer;
   overflow: hidden;
   text-overflow: ellipsis;
