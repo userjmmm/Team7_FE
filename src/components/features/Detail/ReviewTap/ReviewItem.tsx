@@ -18,7 +18,7 @@ export default function ReviewItem({ likes, comment, userNickname, createdDate }
           {likes ? <AiFillLike size={22} color="#fe7373" /> : <AiFillDislike size={22} color="#6F6CFF" />}
         </Name>
         <Text size="s" weight="normal" variant="white">
-          {createdDate.toLocaleDateString()}
+          {new Date(createdDate).toLocaleDateString()}
         </Text>
       </Title>
       <Paragraph size="xs" weight="normal" variant="white">

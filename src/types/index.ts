@@ -44,11 +44,13 @@ export type PlaceInfo = {
     timeExp: Date;
   };
   openHour: OpenHourData;
-  placeLikes: {
-    like: number;
-    dislike: number;
-  };
+  placeLikes: PlaceLikes;
   videoUrl: string;
+};
+
+export type PlaceLikes = {
+  like: number;
+  dislike: number;
 };
 
 export type FacilityInfo = {
@@ -75,6 +77,7 @@ export type ReviewData = {
 };
 
 export type OpenHourData = {
+  periodName: string;
   periodList: {
     timeName: string;
     timeSE: string;
@@ -83,6 +86,6 @@ export type OpenHourData = {
   offdayList: {
     holidayName: string;
     weekAndDay: string;
-    temporaryHolidays: string;
+    temporaryHolidays: boolean;
   }[];
 };
