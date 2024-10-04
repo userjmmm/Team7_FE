@@ -1,10 +1,33 @@
-const PRODUCTION_URL = 'http://localhost:8080'; // 나중에 실제 서버 주소로 변경 예정
-const DEVELOPMENT_URL = 'http://localhost:8080';
+import type { AxiosInstance, AxiosRequestConfig } from 'axios';
+import axios from 'axios';
 
-const BASE_URL = PRODUCTION_URL || DEVELOPMENT_URL;
+import { QueryClient } from '@tanstack/react-query';
 
-const getBaseUrl = (): string => {
-  return BASE_URL;
+const initInstance = (config: AxiosRequestConfig): AxiosInstance => {
+  const instance = axios.create({
+    timeout: 20000,
+    ...config,
+    headers: {
+      'Content-Type': 'application/json',
+      ...config.headers,
+    },
+  });
+  axios.defaults.withCredentials = true;
+  return instance;
 };
 
-export default getBaseUrl;
+export const BASE_URL = 'http://localhost:8080';
+export const fetchInstance = initInstance({
+  baseURL: BASE_URL,
+});
+
+export const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: 1,
+      refetchOnMount: true,
+      refetchOnReconnect: true,
+      refetchOnWindowFocus: true,
+    },
+  },
+});
