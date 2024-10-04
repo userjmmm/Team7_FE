@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { GrPrevious, GrNext } from 'react-icons/gr';
 
 import styled from 'styled-components';
@@ -9,6 +9,13 @@ import { BannerData } from '@/types';
 
 export default function MainBanner({ items }: { items: BannerData[] }) {
   const [currentIndex, setCurrentIndex] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentIndex((prevIndex) => (prevIndex === items.length - 1 ? 0 : prevIndex + 1));
+    }, 3000);
+    return () => clearInterval(interval);
+  }, [items.length]);
 
   const handleBtnPrevClick = () => {
     setCurrentIndex((prevIndex) => Math.max(prevIndex - 1, 0));
@@ -25,18 +32,20 @@ export default function MainBanner({ items }: { items: BannerData[] }) {
       <NextBtn onClick={handleBtnNextClick} disabled={currentIndex === items.length - 1}>
         <GrNext size={40} />
       </NextBtn>
-      <CarouselContainer>
-        {items.length > 0 && (
-          <BannerItem
-            key={items[currentIndex].bannerId}
-            bannerId={items[currentIndex].bannerId}
-            placeId={items[currentIndex].placeId}
-            description={items[currentIndex].description}
-            bannerImg={items[currentIndex].bannerImg}
-            title={items[currentIndex].title}
-          />
-        )}
-      </CarouselContainer>
+      <CarouselWrapper>
+        <CarouselContainer currentIndex={currentIndex}>
+          {items.map((item) => (
+            <BannerItem
+              key={item.bannerId}
+              bannerId={item.bannerId}
+              placeId={item.placeId}
+              description={item.description}
+              bannerImg={item.bannerImg}
+              title={item.title}
+            />
+          ))}
+        </CarouselContainer>
+      </CarouselWrapper>
     </Container>
   );
 }
@@ -67,8 +76,16 @@ const NextBtn = styled.button`
   color: white;
 `;
 
-const CarouselContainer = styled.div`
+const CarouselWrapper = styled.div`
   width: 100%;
   display: flex;
   justify-content: center;
+  overflow: hidden;
+`;
+
+const CarouselContainer = styled.div<{ currentIndex: number }>`
+  display: flex;
+  transition: transform 0.5s ease-in-out;
+  transform: ${({ currentIndex }) => `translateX(-${currentIndex * 100}%)`};
+  width: 100%;
 `;
