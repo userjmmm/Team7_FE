@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Map } from 'react-kakao-maps-sdk';
+import { Map, MapMarker } from 'react-kakao-maps-sdk';
 
 import styled from 'styled-components';
 
@@ -32,7 +32,16 @@ export default function MapWindow() {
           주변 찾기
         </Button>
       </ButtonContainer>
-      <Map center={center} style={{ width: '100%', height: '100%' }} level={4} onCreate={setMap} />
+      <Map center={center} style={{ width: '100%', height: '100%' }} level={4} onCreate={setMap}>
+        {map && (
+          <MapMarker
+            position={{
+              lat: map.getCenter().getLat(),
+              lng: map.getCenter().getLng(),
+            }}
+          />
+        )}
+      </Map>
     </MapContainer>
   );
 }
