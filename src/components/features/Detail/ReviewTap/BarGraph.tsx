@@ -1,22 +1,18 @@
 import styled from 'styled-components';
+import { PlaceLikes } from '@/types';
 
-interface Props {
-  likes: number;
-  dislikes: number;
-}
-
-export default function BarGraph({ likes, dislikes }: Props) {
-  const total = likes + dislikes;
-  const likePercentage = total > 0 ? (likes / total) * 100 : 0;
-  const dislikePercentage = total > 0 ? (dislikes / total) * 100 : 0;
+export default function BarGraph({ like, dislike }: PlaceLikes) {
+  const total = like + dislike;
+  const likePercentage = total > 0 ? (like / total) * 100 : 0;
+  const dislikePercentage = total > 0 ? (dislike / total) * 100 : 0;
 
   return (
     <GraphContainer>
       <Bar color="#FE7373" percentage={likePercentage}>
-        <Label like>{likes}</Label>
+        <Label like>{like}</Label>
       </Bar>
       <Bar color="#6f6cff" percentage={dislikePercentage}>
-        <Label like={false}>{dislikes}</Label>
+        <Label like={false}>{dislike}</Label>
       </Bar>
     </GraphContainer>
   );
