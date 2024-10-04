@@ -39,7 +39,7 @@ export type PlaceData = {
   longitude?: string;
   latitude?: string;
   likes: boolean;
-}
+};
 export type PlaceInfo = {
   placeId: number;
   placeName: string;

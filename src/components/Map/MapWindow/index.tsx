@@ -23,12 +23,7 @@ export default function MapWindow() {
   return (
     <MapContainer>
       <ButtonContainer>
-        <Button
-          onClick={handleSearchNearby}
-          theme="mint"
-          size="responsive"
-          style={{ width: '160px', padding: '10px 20px', margin: '5px' }}
-        >
+        <Button onClick={handleSearchNearby} theme="mint" size="small" style={{ margin: '5px', fontSize: '16px' }}>
           주변 찾기
         </Button>
       </ButtonContainer>
