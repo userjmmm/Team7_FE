@@ -23,7 +23,6 @@ function App() {
           <Route path="/detail/:id" element={<DetailPage />} />
           <Route path="/my" element={<MyPage />} />
         </Route>
-
         <Route path="/auth" element={<AuthPage />} />
       </Routes>
     </>
