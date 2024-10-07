@@ -2,6 +2,7 @@ import { Route, Routes } from 'react-router-dom';
 
 import MainLayout from '@/components/common/layouts/MainLayout';
 
+import AuthPage from '@/pages/Auth';
 import DetailPage from '@/pages/Detail';
 import InfluencerPage from '@/pages/Influencer';
 import MainPage from '@/pages/Main';
@@ -19,9 +20,10 @@ function App() {
           <Route index path="/" element={<MainPage />} />
           <Route path="/influencer" element={<InfluencerPage />} />
           <Route path="/map" element={<MapPage />} />
-          <Route path="/detail" element={<DetailPage />} />
+          <Route path="/detail/:id" element={<DetailPage />} />
           <Route path="/my" element={<MyPage />} />
         </Route>
+        <Route path="/auth" element={<AuthPage />} />
       </Routes>
     </>
   );

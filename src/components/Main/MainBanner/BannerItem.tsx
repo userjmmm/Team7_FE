@@ -15,6 +15,7 @@ export default function BannerItem({ bannerId, placeId, description, bannerImg, 
 }
 const Wrapper = styled(Link)`
   width: 100%;
+  flex: 0 0 100%;
   height: 400px;
   display: flex;
   flex-direction: column;

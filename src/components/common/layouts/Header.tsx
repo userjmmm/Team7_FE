@@ -1,25 +1,41 @@
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
+import Cookies from 'js-cookie';
 import styled from 'styled-components';
 
+import LoginModal from '@/components/common/modals/LoginModal';
 import { Text } from '@/components/common/typography/Text';
+
+import Logo from '@/assets/images/Logo.svg';
 
 export default function Header() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const location = useLocation();
+  const navigate = useNavigate();
 
-  const handleLoginToggle = () => {
-    setIsLoggedIn(!isLoggedIn);
+  useEffect(() => {
+    const accessToken = Cookies.get('access_token');
+    setIsLoggedIn(!!accessToken);
+  }, []);
+
+  const handleLogout = () => {
+    Cookies.remove('access_token');
+    Cookies.remove('refresh_token');
+    setIsLoggedIn(false);
+    navigate('/');
   };
 
   return (
     <HeaderContainer>
-      <LogoContainer>
-        <Logo src="src/assets/images/Logo.svg" alt="인플레이스 로고" />
-        <Text size="l" weight="bold" variant="mint">
-          인 플레이스
-        </Text>
-      </LogoContainer>
+      <LogoLink to="/">
+        <LogoContainer>
+          <LogoImage src={Logo} alt="인플레이스 로고" />
+          <Text size="l" weight="bold" variant="mint">
+            인 플레이스
+          </Text>
+        </LogoContainer>
+      </LogoLink>
       <Nav>
         {isLoggedIn ? (
           <>
@@ -28,7 +44,7 @@ export default function Header() {
                 마이페이지
               </Text>
             </NavItem>
-            <LoginButton onClick={handleLoginToggle}>로그아웃</LoginButton>
+            <LoginButton onClick={handleLogout}>로그아웃</LoginButton>
           </>
         ) : (
           <>
@@ -37,23 +53,30 @@ export default function Header() {
                 인플루언서
               </Text>
             </NavItem>
-            <LoginButton onClick={handleLoginToggle}>로그인</LoginButton>
+            <LoginModal currentPath={location.pathname}>
+              {(openModal) => <LoginButton onClick={openModal}>로그인</LoginButton>}
+            </LoginModal>
           </>
         )}
       </Nav>
     </HeaderContainer>
   );
 }
-export const HEADER_HEIGHT = 60;
+export const HEADER_HEIGHT = 90;
 
 const HeaderContainer = styled.header`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 20px;
-  height: 60px;
-  background-color: #292929;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 20px 0;
+  height: 80px;
+  box-sizing: border-box;
+`;
+
+const LogoLink = styled(Link)`
+  text-decoration: none;
+  display: flex;
+  align-items: center;
 `;
 
 const LogoContainer = styled.div`
@@ -61,7 +84,7 @@ const LogoContainer = styled.div`
   align-items: center;
 `;
 
-const Logo = styled.img`
+const LogoImage = styled.img`
   height: 40px;
   margin-right: 20px;
 `;

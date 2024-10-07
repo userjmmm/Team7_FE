@@ -5,12 +5,16 @@ import styled from 'styled-components';
 
 import { Paragraph } from '@/components/common/typography/Paragraph';
 
+import useExtractYoutubeVideoId from '@/hooks/useExtractYoutube';
 import { SpotData } from '@/types';
 
 export default function SpotItem({ videoId, videoAlias, videoUrl, place }: SpotData) {
   return (
     <Wrapper to={`/detail/${place.placeId}`}>
-      <Image src={videoUrl} alt={String(videoId)} />
+      <Image
+        src={`https://img.youtube.com/vi/${useExtractYoutubeVideoId(videoUrl)}/maxresdefault.jpg`}
+        alt={String(videoId)}
+      />
       <Paragraph size="l" weight="bold" variant="white">
         {videoAlias}
       </Paragraph>
