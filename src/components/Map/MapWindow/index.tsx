@@ -15,7 +15,7 @@ export default function MapWindow() {
     },
     errMsg: null as string | null,
     isLoading: true,
-  })
+  });
 
   const handleSearchNearby = useCallback(() => {
     if (!mapInstance) return;
@@ -26,8 +26,8 @@ export default function MapWindow() {
     const bottomRightLongitude = bounds.getNorthEast().getLng();
     const bottomRightLatitude = bounds.getSouthWest().getLat();
 
-    let message = "북서쪽 좌표는 위도 " + topLeftLatitude + ", 경도 " + topLeftLongitude + " 이고 <br>";
-    message += "남동쪽 좌표는 위도 " + bottomRightLatitude + ", 경도 " + bottomRightLongitude + " 입니다";
+    let message = '북서쪽 좌표는 위도 ' + topLeftLatitude + ', 경도 ' + topLeftLongitude + ' 이고 <br>';
+    message += '남동쪽 좌표는 위도 ' + bottomRightLatitude + ', 경도 ' + bottomRightLongitude + ' 입니다';
 
     console.log(message);
   }, [mapInstance]);
@@ -57,12 +57,12 @@ export default function MapWindow() {
             errMsg: err.message,
             isLoading: false,
           }));
-        }
-      )
+        },
+      );
     } else {
       setMapState((prev) => ({
         ...prev,
-        errMsg: "위치 정보를 사용할 수 없습니다.",
+        errMsg: '위치 정보를 사용할 수 없습니다.',
         isLoading: false,
       }));
     }
@@ -76,9 +76,7 @@ export default function MapWindow() {
         </Button>
       </ButtonContainer>
       <Map center={mapState.center} style={{ width: '100%', height: '100%' }} level={4} onCreate={setMapInstance}>
-        {!mapState.isLoading && (
-          <MapMarker position={mapState.center} />
-        )}
+        {!mapState.isLoading && <MapMarker position={mapState.center} />}
       </Map>
       <ResetButtonContainer>
         <Button
