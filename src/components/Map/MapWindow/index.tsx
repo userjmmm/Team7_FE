@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { FaUndoAlt } from 'react-icons/fa';
 import { Map, MapMarker } from 'react-kakao-maps-sdk';
 
@@ -7,25 +7,66 @@ import styled from 'styled-components';
 import Button from '@/components/common/Button';
 
 export default function MapWindow() {
-  const [map, setMap] = useState<kakao.maps.Map | null>(null);
-  const center = {
-    lat: 35.889062,
-    lng: 128.610283,
-  };
+  const [mapInstance, setMapInstance] = useState<kakao.maps.Map | null>(null);
+  const [mapState, setMapState] = useState({
+    center: {
+      lat: 35.889062,
+      lng: 128.610283,
+    },
+    errMsg: null as string | null,
+    isLoading: true,
+  })
 
-  const handleSearchNearby = () => {
-    // 변경 예정
-    if (map) {
-      const currentCenter = map.getCenter();
-      console.log('현재 중심 좌표:', currentCenter.getLat(), currentCenter.getLng());
-    }
-  };
+  const handleSearchNearby = useCallback(() => {
+    if (!mapInstance) return;
+
+    const bounds = mapInstance.getBounds();
+    const topLeftLongitude = bounds.getSouthWest().getLng();
+    const topLeftLatitude = bounds.getNorthEast().getLat();
+    const bottomRightLongitude = bounds.getNorthEast().getLng();
+    const bottomRightLatitude = bounds.getSouthWest().getLat();
+
+    let message = "북서쪽 좌표는 위도 " + topLeftLatitude + ", 경도 " + topLeftLongitude + " 이고 <br>";
+    message += "남동쪽 좌표는 위도 " + bottomRightLatitude + ", 경도 " + bottomRightLongitude + " 입니다";
+
+    console.log(message);
+  }, [mapInstance]);
 
   const handleResetCenter = () => {
-    if (map) {
-      map.setCenter(new kakao.maps.LatLng(center.lat, center.lng));
+    if (mapInstance) {
+      mapInstance.setCenter(new kakao.maps.LatLng(mapState.center.lat, mapState.center.lng));
     }
   };
+
+  useEffect(() => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          setMapState((prev) => ({
+            ...prev,
+            center: {
+              lat: position.coords.latitude,
+              lng: position.coords.longitude,
+            },
+            isLoading: false,
+          }));
+        },
+        (err) => {
+          setMapState((prev) => ({
+            ...prev,
+            errMsg: err.message,
+            isLoading: false,
+          }));
+        }
+      )
+    } else {
+      setMapState((prev) => ({
+        ...prev,
+        errMsg: "위치 정보를 사용할 수 없습니다.",
+        isLoading: false,
+      }));
+    }
+  }, []);
 
   return (
     <MapContainer>
@@ -34,14 +75,9 @@ export default function MapWindow() {
           주변 찾기
         </Button>
       </ButtonContainer>
-      <Map center={center} style={{ width: '100%', height: '100%' }} level={4} onCreate={setMap}>
-        {map && (
-          <MapMarker
-            position={{
-              lat: map.getCenter().getLat(),
-              lng: map.getCenter().getLng(),
-            }}
-          />
+      <Map center={mapState.center} style={{ width: '100%', height: '100%' }} level={4} onCreate={setMapInstance}>
+        {!mapState.isLoading && (
+          <MapMarker position={mapState.center} />
         )}
       </Map>
       <ResetButtonContainer>
