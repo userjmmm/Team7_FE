@@ -27,13 +27,13 @@ export default function VisitModal({
         </DescriptionSection>
         <BtnContainer>
           <Button
-            theme="blackOutline"
+            variant="blackOutline"
             style={{ fontWeight: 'bold', width: '170px', height: '46px', fontSize: '18px' }}
             onClick={() => setVisitModal(false)}
           >
             취소
           </Button>
-          <Button theme="kakao" style={{ fontWeight: 'bold', width: '170px', height: '46px', fontSize: '18px' }}>
+          <Button variant="kakao" style={{ fontWeight: 'bold', width: '170px', height: '46px', fontSize: '18px' }}>
             확인
           </Button>
         </BtnContainer>

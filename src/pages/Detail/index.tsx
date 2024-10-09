@@ -32,7 +32,7 @@ export default function DetailPage() {
         </Text>
         <ButtonWrapper>
           <Button
-            theme="visit"
+            variant="visit"
             style={{
               width: '130px',
               height: '40px',
