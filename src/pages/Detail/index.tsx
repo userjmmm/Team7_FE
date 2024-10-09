@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { Suspense, useState } from 'react';
 import { FaYoutube } from 'react-icons/fa';
 import { RiKakaoTalkFill } from 'react-icons/ri';
 
@@ -12,14 +12,14 @@ import ReviewTap from '@/components/features/Detail/ReviewTap';
 import VisitModal from '@/components/features/Detail/VisitModal';
 
 import useExtractYoutubeVideoId from '@/hooks/useExtractYoutube';
-import { useGetDetail } from '@/api/hooks/useGetDetail';
+import { useGetPlaceInfo } from '@/api/hooks/useGetPlaceInfo';
+import Loading from '@/components/common/layouts/Loading';
 
 export default function DetailPage() {
   const [activeTab, setActiveTab] = useState<'info' | 'review'>('info');
   const [visitModal, setVisitModal] = useState(false);
   const { id } = useParams() as { id: string };
-  const [{ data: infoData }, { data: list }] = useGetDetail(id);
-
+  const { data: infoData } = useGetPlaceInfo(id);
   return (
     <Wrapper>
       <Image
@@ -50,18 +50,21 @@ export default function DetailPage() {
         </ButtonWrapper>
       </TitleContainer>
       <TapContainer>
-        <Tap active={activeTab === 'info'} onClick={() => setActiveTab('info')}>
+        <Tap $active={activeTab === 'info'} onClick={() => setActiveTab('info')}>
           정보
         </Tap>
-        <Tap active={activeTab === 'review'} onClick={() => setActiveTab('review')}>
+        <Tap $active={activeTab === 'review'} onClick={() => setActiveTab('review')}>
           리뷰
         </Tap>
       </TapContainer>
+
       <InfoContainer>
         {activeTab === 'info' ? (
           <InfoTap facilityInfo={infoData.facilityInfo} openHour={infoData.openHour} menuInfos={infoData.menuInfos} />
         ) : (
-          <ReviewTap placeLikes={infoData.placeLikes} list={list} />
+          <Suspense fallback={<Loading size={50} />}>
+            <ReviewTap placeLikes={infoData.placeLikes} id={id} />
+          </Suspense>
         )}
       </InfoContainer>
       {visitModal ? <VisitModal placeName={infoData.placeName} setVisitModal={setVisitModal} /> : null}
@@ -84,14 +87,14 @@ const TitleContainer = styled.div`
   justify-content: space-between;
   align-items: center;
 `;
-const Tap = styled.button<{ active: boolean }>`
+const Tap = styled.button<{ $active: boolean }>`
   width: 100%;
   height: 60px;
   font-size: 24px;
   font-weight: bold;
-  color: ${({ active }) => (active ? '#55ebff' : 'white')};
+  color: ${({ $active }) => ($active ? '#55ebff' : 'white')};
   border: none;
-  border-bottom: 3px solid ${({ active }) => (active ? '#55ebff' : 'white')};
+  border-bottom: 3px solid ${({ $active }) => ($active ? '#55ebff' : 'white')};
   background: none;
   cursor: pointer;
   transition:

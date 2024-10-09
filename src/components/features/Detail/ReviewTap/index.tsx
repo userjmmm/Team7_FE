@@ -6,9 +6,11 @@ import { Paragraph } from '@/components/common/typography/Paragraph';
 
 import BarGraph from './BarGraph';
 import Review from './Review';
-import { PlaceLikes, ReviewData } from '@/types';
+import { PlaceLikes } from '@/types';
+import { useGetReview } from '@/api/hooks/useGetReview';
 
-export default function ReviewTap({ placeLikes, list }: { placeLikes: PlaceLikes; list: ReviewData[] }) {
+export default function ReviewTap({ placeLikes, id }: { placeLikes: PlaceLikes; id: string }) {
+  const { data: list } = useGetReview(id);
   return (
     <Wrapper>
       <CountLike>
