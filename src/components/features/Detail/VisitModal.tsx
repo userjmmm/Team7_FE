@@ -53,11 +53,13 @@ const Wrapper = styled.div`
   transform: translateX(-50%);
   width: 500px;
   height: 600px;
+  border-radius: 8px;
   background-color: white;
-  text-align: center;
+
   display: flex;
-  align-items: center;
   flex-direction: column;
+  text-align: center;
+  align-items: center;
   gap: 60px;
 `;
 const DescriptionSection = styled.div`
