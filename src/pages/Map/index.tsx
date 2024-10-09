@@ -1,60 +1,13 @@
-import React from 'react';
-
+import { useState, useMemo } from 'react';
 import styled from 'styled-components';
-
 import DropdownMenu from '@/components/Map/DropdownMenu';
 import MapWindow from '@/components/Map/MapWindow';
 import PlaceSection from '@/components/Map/PlaceSection';
 import ToggleButton from '@/components/Map/ToggleButton';
 import { Text } from '@/components/common/typography/Text';
-
+import locationOptions from '@/utils/constants/LocationOptions';
+import influencerOptions from '@/utils/constants/InfluencerOptions';
 import { PlaceData } from '@/types';
-
-const dummyOptionsInfluencer = [
-  { label: '성시경' },
-  { label: '풍자' },
-  { label: '히밥' },
-  { label: '임영웅' },
-  { label: '백종원' },
-  { label: '짱구 대디' },
-  { label: '아리의 인형방' },
-  { label: '쯔양' },
-];
-
-const dummyOptionsLocation = [
-  {
-    label: '서울특별시',
-    subOptions: [
-      { label: '강남구' },
-      { label: '서초구' },
-      { label: '송파구' },
-      { label: '마포구' },
-      { label: '용산구' },
-    ],
-  },
-  {
-    label: '부산광역시',
-    subOptions: [
-      { label: '해운대구' },
-      { label: '부산진구' },
-      { label: '동래구' },
-      { label: '남구' },
-      { label: '북구' },
-    ],
-  },
-  {
-    label: '대구광역시',
-    subOptions: [{ label: '중구' }, { label: '동구' }, { label: '서구' }, { label: '남구' }, { label: '북구' }],
-  },
-  {
-    label: '인천광역시',
-    subOptions: [{ label: '중구' }, { label: '동구' }, { label: '미추홀구' }, { label: '연수구' }, { label: '남동구' }],
-  },
-  {
-    label: '광주광역시',
-    subOptions: [{ label: '동구' }, { label: '서구' }, { label: '남구' }, { label: '북구' }, { label: '광산구' }],
-  },
-];
 
 const dummyPlaces: PlaceData[] = [
   {
@@ -62,10 +15,10 @@ const dummyPlaces: PlaceData[] = [
     placeName: '료코',
     address: {
       address1: '경상북도',
-      address2: '경주시',
-      address3: '황리단길',
+      address2: '경주시 황남동',
+      address3: '',
     },
-    category: '',
+    category: '맛집',
     influencerName: '성시경',
     longitude: '',
     latitude: '',
@@ -79,7 +32,7 @@ const dummyPlaces: PlaceData[] = [
       address2: '중구',
       address3: '',
     },
-    category: '',
+    category: '카페',
     influencerName: '성시경',
     longitude: '',
     latitude: '',
@@ -89,11 +42,11 @@ const dummyPlaces: PlaceData[] = [
     placeId: 3,
     placeName: '고향돼지국밥',
     address: {
-      address1: '대구광역시',
-      address2: '동구',
+      address1: '대전광역시',
+      address2: '서구',
       address3: '',
     },
-    category: '',
+    category: '맛집',
     influencerName: '히밥',
     longitude: '',
     latitude: '',
@@ -103,11 +56,11 @@ const dummyPlaces: PlaceData[] = [
     placeId: 4,
     placeName: '걸리버막창 동성로점',
     address: {
-      address1: '대구광역시',
-      address2: '중구',
+      address1: '부산광역시',
+      address2: '부산진구',
       address3: '',
     },
-    category: '임영웅',
+    category: '카페',
     influencerName: '임영웅',
     longitude: '',
     latitude: '',
@@ -117,11 +70,11 @@ const dummyPlaces: PlaceData[] = [
     placeId: 5,
     placeName: '이화국수',
     address: {
-      address1: '대구광역시',
-      address2: '달서구',
+      address1: '충청남도',
+      address2: '천안시',
       address3: '',
     },
-    category: '',
+    category: '맛집',
     influencerName: '백종원',
     longitude: '',
     latitude: '',
@@ -131,11 +84,11 @@ const dummyPlaces: PlaceData[] = [
     placeId: 6,
     placeName: '오복반점',
     address: {
-      address1: '대구광역시',
-      address2: '달성군',
+      address1: '전라북도',
+      address2: '임실군',
       address3: '',
     },
-    category: '',
+    category: '카페',
     influencerName: '히밥',
     longitude: '',
     latitude: '',
@@ -149,7 +102,7 @@ const dummyPlaces: PlaceData[] = [
       address2: '수성구',
       address3: '',
     },
-    category: '',
+    category: '맛집',
     influencerName: '성시경',
     longitude: '',
     latitude: '',
@@ -159,11 +112,11 @@ const dummyPlaces: PlaceData[] = [
     placeId: 8,
     placeName: '마룸모',
     address: {
-      address1: '대구광역시',
-      address2: '북구',
+      address1: '서울특별시',
+      address2: '강남구',
       address3: '',
     },
-    category: '',
+    category: '카페',
     influencerName: '성시경',
     longitude: '',
     latitude: '',
@@ -173,11 +126,11 @@ const dummyPlaces: PlaceData[] = [
     placeId: 9,
     placeName: '마룸모',
     address: {
-      address1: '대구광역시',
-      address2: '북구',
+      address1: '경기도 시흥시',
+      address2: '',
       address3: '',
     },
-    category: '',
+    category: '맛집',
     influencerName: '성시경',
     longitude: '',
     latitude: '',
@@ -187,11 +140,11 @@ const dummyPlaces: PlaceData[] = [
     placeId: 10,
     placeName: '마룸모',
     address: {
-      address1: '대구광역시',
-      address2: '북구',
+      address1: '강원도 춘천시',
+      address2: '',
       address3: '',
     },
-    category: '',
+    category: '카페',
     influencerName: '성시경',
     longitude: '',
     latitude: '',
@@ -200,18 +153,34 @@ const dummyPlaces: PlaceData[] = [
 ];
 
 export default function MapPage() {
-  const [selectedInfluencer, setSelectedInfluencer] = React.useState<string>('');
-  const [selectedLocation, setSelectedLocation] = React.useState<string>('');
+  const [selectedInfluencer, setSelectedInfluencer] = useState<string>('');
+  const [selectedLocation, setSelectedLocation] = useState<{ main: string; sub?: string }>({ main: '' });
+  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
 
   const handleInfluencerChange = (value: string) => {
     setSelectedInfluencer(value);
-    console.log('Selected influencer:', value); // 변경 예정
   };
 
-  const handleLocationChange = (value: string) => {
+  const handleLocationChange = (value: { main: string; sub?: string }) => {
     setSelectedLocation(value);
-    console.log('Selected location:', value); // 변경 예정
   };
+
+  const handleCategorySelect = (selected: string[]) => {
+    setSelectedCategories(selected);
+  };
+
+  const filteredPlaces = useMemo(() => {
+    return dummyPlaces.filter((place) => {
+      const locationMatch =
+        place.address.address1.includes(selectedLocation.main) &&
+        (!selectedLocation.sub || place.address.address2.includes(selectedLocation.sub));
+      const influencerMatch = !selectedInfluencer || place.influencerName === selectedInfluencer;
+      const categoryMatch =
+        selectedCategories.length === 0 || (place.category && selectedCategories.includes(place.category));
+
+      return locationMatch && influencerMatch && categoryMatch;
+    });
+  }, [selectedLocation, selectedInfluencer, selectedCategories]);
 
   return (
     <PageContainer>
@@ -220,23 +189,22 @@ export default function MapPage() {
       </Text>
       <DropdownContainer>
         <DropdownMenu
-          options={dummyOptionsLocation}
+          options={locationOptions}
           multiLevel
           onChange={handleLocationChange}
           placeholder="위치"
           type="location"
         />
         <DropdownMenu
-          options={dummyOptionsInfluencer}
-          onChange={handleInfluencerChange}
+          options={influencerOptions}
+          onChange={(value) => handleInfluencerChange(value.main)}
           placeholder="인플루언서"
           type="influencer"
         />
       </DropdownContainer>
-      <ToggleButton options={['맛집', '카페', '팝업']} onSelect={(selected) => console.log(selected)} />
-      {/* 콘솔 삭제 예정 */}
+      <ToggleButton options={['맛집', '카페', '팝업']} onSelect={handleCategorySelect} />
       <MapWindow />
-      <PlaceSection items={dummyPlaces} />
+      <PlaceSection items={filteredPlaces} />
     </PageContainer>
   );
 }

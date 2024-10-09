@@ -7,13 +7,13 @@ export const getPlaceList = async (location: LocationData, filters: FilterParams
   const { categories, influencers } = filters;
 
   const params = new URLSearchParams({
-  topLeftLongitude: topLeftLongitude.toString(),
-  topLeftLatitude: topLeftLatitude.toString(),
-  bottomRightLongitude: bottomRightLongitude.toString(),
-  bottomRightLatitude: bottomRightLatitude.toString(),
-  page: '0',
-  categories: categories.join(','),
-  influencers: influencers.join(','),
+    topLeftLongitude: topLeftLongitude.toString(),
+    topLeftLatitude: topLeftLatitude.toString(),
+    bottomRightLongitude: bottomRightLongitude.toString(),
+    bottomRightLatitude: bottomRightLatitude.toString(),
+    page: '0',
+    categories: categories.join(','),
+    influencers: influencers.join(','),
   });
 
   const response = await fetchInstance.get<PlaceList>(`/places?${params}`);
@@ -24,6 +24,6 @@ export const useGetPlaceList = (location: LocationData, filters: FilterParams) =
   return useSuspenseQuery({
     queryKey: ['placeList', location, filters],
     queryFn: () => getPlaceList(location, filters),
-    staleTime:  1000 * 60 * 5,
+    staleTime: 1000 * 60 * 5,
   });
 };

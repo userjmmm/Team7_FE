@@ -15,7 +15,7 @@ interface Option {
 interface DropdownMenuProps {
   options: Option[];
   multiLevel?: boolean;
-  onChange: (value: string) => void;
+  onChange: (value: { main: string; sub?: string }) => void;
   placeholder?: string;
   type: 'location' | 'influencer';
 }
@@ -37,17 +37,15 @@ export default function DropdownMenu({
   const handleMainOptionClick = (option: Option) => {
     setSelectedMainOption(option);
     setSelectedSubOption(null);
-
+    onChange({ main: option.label });
     if (!multiLevel || !option.subOptions) {
-      onChange(option.label);
       setIsOpen(false);
     }
   };
 
   const handleSubOptionClick = (subOption: Option) => {
     setSelectedSubOption(subOption);
-    const fullPath = `${selectedMainOption?.label} ${subOption.label}`;
-    onChange(fullPath);
+    onChange({ main: selectedMainOption!.label, sub: subOption.label });
     setIsOpen(false);
   };
 
@@ -76,7 +74,7 @@ export default function DropdownMenu({
   };
 
   const displayValue = selectedSubOption
-    ? `${selectedMainOption?.label} ${selectedSubOption.label}`
+    ? `${selectedMainOption?.label} ${selectedSubOption?.label}`
     : selectedMainOption?.label || placeholder;
 
   return (
@@ -139,8 +137,6 @@ const DropdownMenuContainer = styled.div<{ multiLevel: boolean; hasSubOptions: b
   border-radius: 8px;
   margin-top: 4px;
   max-height: 300px;
-  overflow-x: hidden;
-  overflow-y: auto;
   z-index: 1000;
 `;
 
@@ -172,14 +168,18 @@ const SearchIcon = styled(FaSearch)`
 const OptionsContainer = styled.div<{ multiLevel: boolean; hasSubOptions: boolean }>`
   display: flex;
   max-height: 250px;
-  overflow: hidden;
+  overflow-y: auto;
 `;
 
 const MainOptions = styled.div`
   flex: 1;
+  max-height: 250px;
+  overflow-y: auto;
 `;
 
 const SubOptions = styled.div`
   flex: 1;
   border-left: 1px solid rgba(0, 0, 0, 0.1);
+  max-height: 250px;
+  overflow-y: auto;
 `;

@@ -26,8 +26,8 @@ export default function MapWindow() {
     const bottomRightLongitude = bounds.getNorthEast().getLng();
     const bottomRightLatitude = bounds.getSouthWest().getLat();
 
-    let message = '북서쪽 좌표는 위도 ' + topLeftLatitude + ', 경도 ' + topLeftLongitude + ' 이고 <br>';
-    message += '남동쪽 좌표는 위도 ' + bottomRightLatitude + ', 경도 ' + bottomRightLongitude + ' 입니다';
+    const message = `북서쪽 좌표는 위도 ${topLeftLatitude}, 경도 ${topLeftLongitude} 이고 <br> 
+                    남동쪽 좌표는 위도 ${bottomRightLatitude}, 경도 ${bottomRightLongitude} 입니다`;
 
     console.log(message);
   }, [mapInstance]);
