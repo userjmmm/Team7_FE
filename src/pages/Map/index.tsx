@@ -52,13 +52,22 @@ export default function MapPage() {
   const filteredPlaces = useMemo(() => {
     if (!placeList) return [];
     return placeList.places.filter((place: PlaceInfo) => {
-      const locationMatch =
-        place.address.address1.includes(selectedLocation.main) &&
-        (!selectedLocation.sub || place.address.address2.includes(selectedLocation.sub));
-
-      return locationMatch;
+      const locationMatch = (() => {
+        if (!selectedLocation.main) return true;
+        const mainMatch =
+          place.address.address1.includes(selectedLocation.main) ||
+          place.address.address2.includes(selectedLocation.main);
+        const subMatch = selectedLocation.sub
+          ? place.address.address2.includes(selectedLocation.sub) ||
+            (place.address.address3 && place.address.address3.includes(selectedLocation.sub))
+          : true;
+        return mainMatch && subMatch;
+      })();
+      const influencerMatch = !selectedInfluencer || place.influencerName === selectedInfluencer;
+      const categoryMatch = selectedCategories.length === 0 || selectedCategories.includes(place.category);
+      return locationMatch && influencerMatch && categoryMatch;
     });
-  }, [placeList, selectedLocation]);
+  }, [placeList, selectedLocation, selectedInfluencer, selectedCategories]);
 
   const mapCenter = useMemo(
     () => ({
