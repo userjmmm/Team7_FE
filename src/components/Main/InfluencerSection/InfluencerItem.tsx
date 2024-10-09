@@ -15,18 +15,18 @@ export default function InfluencerItem({
   return (
     <Wrapper to={`/influencer/${influencerId}`}>
       <Image src={influencerImgUrl} alt={influencerName} />
-      <Paragraph size="l" weight="bold" variant="white">
+      <Paragraph size="m" weight="bold" variant="white">
         {influencerName}
       </Paragraph>
-      <Paragraph size="s" weight="normal" variant="white">
+      <Paragraph size="xs" weight="normal" variant="white">
         {influencerJob}
       </Paragraph>
     </Wrapper>
   );
 }
 const Wrapper = styled(Link)`
-  width: 216px;
-  height: 356px;
+  width: 170px;
+  height: 278px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -35,9 +35,9 @@ const Wrapper = styled(Link)`
 `;
 
 const Image = styled.img`
-  width: 216px;
-  height: 270px;
+  width: 168px;
+  height: 208px;
   object-fit: cover;
-  margin-bottom: 20px;
+  margin-bottom: 8px;
   border-radius: 6px;
 `;
