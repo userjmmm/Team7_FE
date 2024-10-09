@@ -1,72 +1,84 @@
-import { useState, useCallback, useEffect } from 'react';
+import { useState, useCallback, useEffect, useRef } from 'react';
 import { FaUndoAlt } from 'react-icons/fa';
 import { Map, MapMarker } from 'react-kakao-maps-sdk';
-
 import styled from 'styled-components';
-
 import Button from '@/components/common/Button';
+import { LocationData, PlaceInfo } from '@/types';
 
-export default function MapWindow() {
-  const [mapInstance, setMapInstance] = useState<kakao.maps.Map | null>(null);
-  const [mapState, setMapState] = useState({
-    center: {
-      lat: 35.889062,
-      lng: 128.610283,
-    },
-    errMsg: null as string | null,
-    isLoading: true,
-  });
+interface MapWindowProps {
+  onBoundsChange: (bounds: LocationData) => void;
+  places: PlaceInfo[];
+  center: { lat: number; lng: number };
+}
+
+export default function MapWindow({ onBoundsChange, places, center }: MapWindowProps) {
+  const mapRef = useRef<kakao.maps.Map | null>(null);
+  const [mapCenter, setMapCenter] = useState(center);
+  const [userLocation, setUserLocation] = useState<{ lat: number; lng: number } | null>(null);
+
+  const updateBounds = useCallback(() => {
+    if (!mapRef.current) return;
+
+    const bounds = mapRef.current.getBounds();
+    const newBounds: LocationData = {
+      topLeftLatitude: bounds.getNorthEast().getLat(),
+      topLeftLongitude: bounds.getSouthWest().getLng(),
+      bottomRightLatitude: bounds.getSouthWest().getLat(),
+      bottomRightLongitude: bounds.getNorthEast().getLng(),
+    };
+    onBoundsChange(newBounds);
+  }, [onBoundsChange]);
 
   const handleSearchNearby = useCallback(() => {
-    if (!mapInstance) return;
+    updateBounds();
+  }, [updateBounds]);
 
-    const bounds = mapInstance.getBounds();
-    const topLeftLongitude = bounds.getSouthWest().getLng();
-    const topLeftLatitude = bounds.getNorthEast().getLat();
-    const bottomRightLongitude = bounds.getNorthEast().getLng();
-    const bottomRightLatitude = bounds.getSouthWest().getLat();
-
-    const message = `북서쪽 좌표는 위도 ${topLeftLatitude}, 경도 ${topLeftLongitude} 이고 <br> 
-                    남동쪽 좌표는 위도 ${bottomRightLatitude}, 경도 ${bottomRightLongitude} 입니다`;
-
-    console.log(message);
-  }, [mapInstance]);
-
-  const handleResetCenter = () => {
-    if (mapInstance) {
-      mapInstance.setCenter(new kakao.maps.LatLng(mapState.center.lat, mapState.center.lng));
+  const handleResetCenter = useCallback(() => {
+    if (mapRef.current && userLocation) {
+      mapRef.current.setCenter(new kakao.maps.LatLng(userLocation.lat, userLocation.lng));
+      updateBounds();
     }
+  }, [userLocation, updateBounds]);
+
+  const handleCenterChanged = (map: kakao.maps.Map) => {
+    const newCenter = map.getCenter();
+    setMapCenter({
+      lat: newCenter.getLat(),
+      lng: newCenter.getLng(),
+    });
   };
 
   useEffect(() => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
-          setMapState((prev) => ({
-            ...prev,
-            center: {
-              lat: position.coords.latitude,
-              lng: position.coords.longitude,
-            },
-            isLoading: false,
-          }));
+          const newCenter = {
+            lat: position.coords.latitude,
+            lng: position.coords.longitude,
+          };
+          setMapCenter(newCenter);
+          setUserLocation(newCenter);
+          if (mapRef.current) {
+            mapRef.current.setCenter(new kakao.maps.LatLng(newCenter.lat, newCenter.lng));
+            updateBounds();
+          }
         },
         (err) => {
-          setMapState((prev) => ({
-            ...prev,
-            errMsg: err.message,
-            isLoading: false,
-          }));
+          console.error('Geolocation error:', err);
         },
       );
     } else {
-      setMapState((prev) => ({
-        ...prev,
-        errMsg: '위치 정보를 사용할 수 없습니다.',
-        isLoading: false,
-      }));
+      console.warn('Geolocation is not supported by this browser.');
     }
-  }, []);
+  }, [updateBounds]);
+
+  useEffect(() => {
+    setMapCenter(center);
+    if (mapRef.current) {
+      mapRef.current.setCenter(new kakao.maps.LatLng(center.lat, center.lng));
+      updateBounds();
+    }
+  }, [center, updateBounds]);
 
   return (
     <MapContainer>
@@ -75,8 +87,32 @@ export default function MapWindow() {
           주변 찾기
         </Button>
       </ButtonContainer>
-      <Map center={mapState.center} style={{ width: '100%', height: '100%' }} level={4} onCreate={setMapInstance}>
-        {!mapState.isLoading && <MapMarker position={mapState.center} />}
+      <Map
+        center={mapCenter}
+        style={{ width: '100%', height: '100%' }}
+        level={4}
+        onCreate={(map) => {
+          mapRef.current = map;
+        }}
+        onCenterChanged={handleCenterChanged}
+        onZoomChanged={updateBounds}
+        onDragEnd={updateBounds}
+      >
+        {userLocation && (
+          <MapMarker
+            position={userLocation}
+            image={{
+              src: 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png',
+              size: { width: 24, height: 35 },
+            }}
+          />
+        )}
+        {places.map((place) => {
+          const lat = parseFloat(place.latitude);
+          const lng = parseFloat(place.longitude);
+          if (Number.isNaN(lat) || Number.isNaN(lng)) return null;
+          return <MapMarker key={place.placeId} position={{ lat, lng }} title={place.placeName} />;
+        })}
       </Map>
       <ResetButtonContainer>
         <Button

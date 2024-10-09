@@ -12,19 +12,24 @@ import { useGetPlaceList } from '@/api/hooks/useGetPlaceList';
 
 export default function MapPage() {
   const [selectedInfluencer, setSelectedInfluencer] = useState<string>('');
-  const [selectedLocation, setSelectedLocation] = useState<{ main: string; sub?: string }>({ main: '' });
+  const [selectedLocation, setSelectedLocation] = useState<{ main: string; sub?: string; lat?: number; lng?: number }>({
+    main: '',
+  });
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [mapBounds, setMapBounds] = useState<LocationData>({
     topLeftLatitude: 0,
     topLeftLongitude: 0,
     bottomRightLatitude: 0,
-    bottomRightLongitude: 0
+    bottomRightLongitude: 0,
   });
 
-  const filters = useMemo(() => ({
-    categories: selectedCategories,
-    influencers: selectedInfluencer ? [selectedInfluencer] : [],
-  }), [selectedCategories, selectedInfluencer]);
+  const filters = useMemo(
+    () => ({
+      categories: selectedCategories,
+      influencers: selectedInfluencer ? [selectedInfluencer] : [],
+    }),
+    [selectedCategories, selectedInfluencer],
+  );
 
   const { data: placeList } = useGetPlaceList(mapBounds, filters);
 
@@ -32,7 +37,7 @@ export default function MapPage() {
     setSelectedInfluencer(value);
   };
 
-  const handleLocationChange = (value: { main: string; sub?: string }) => {
+  const handleLocationChange = (value: { main: string; sub?: string; lat?: number; lng?: number }) => {
     setSelectedLocation(value);
   };
 
@@ -55,6 +60,14 @@ export default function MapPage() {
     });
   }, [placeList, selectedLocation]);
 
+  const mapCenter = useMemo(
+    () => ({
+      lat: selectedLocation.lat ?? 37.5665,
+      lng: selectedLocation.lng ?? 126.978,
+    }),
+    [selectedLocation],
+  );
+
   return (
     <PageContainer>
       <Text size="l" weight="bold" variant="white">
@@ -76,7 +89,7 @@ export default function MapPage() {
         />
       </DropdownContainer>
       <ToggleButton options={['맛집', '카페', '팝업']} onSelect={handleCategorySelect} />
-      <MapWindow onBoundsChange={handleBoundsChange} places={filteredPlaces} />
+      <MapWindow onBoundsChange={handleBoundsChange} places={filteredPlaces} center={mapCenter} />
       <PlaceSection items={filteredPlaces} />
     </PageContainer>
   );

@@ -1,21 +1,21 @@
 import React from 'react';
 import { FaSearch } from 'react-icons/fa';
 import { IoIosArrowUp, IoIosArrowDown } from 'react-icons/io';
-
 import styled from 'styled-components';
-
 import DropdownItem from './DropdownItem';
 import useDetectClose from '@/hooks/useDetectClose';
 
 interface Option {
   label: string;
+  lat?: number;
+  lng?: number;
   subOptions?: Option[];
 }
 
 interface DropdownMenuProps {
   options: Option[];
   multiLevel?: boolean;
-  onChange: (value: { main: string; sub?: string }) => void;
+  onChange: (value: { main: string; sub?: string; lat?: number; lng?: number }) => void;
   placeholder?: string;
   type: 'location' | 'influencer';
 }
@@ -37,7 +37,7 @@ export default function DropdownMenu({
   const handleMainOptionClick = (option: Option) => {
     setSelectedMainOption(option);
     setSelectedSubOption(null);
-    onChange({ main: option.label });
+    onChange({ main: option.label, lat: option.lat, lng: option.lng });
     if (!multiLevel || !option.subOptions) {
       setIsOpen(false);
     }
@@ -45,7 +45,12 @@ export default function DropdownMenu({
 
   const handleSubOptionClick = (subOption: Option) => {
     setSelectedSubOption(subOption);
-    onChange({ main: selectedMainOption!.label, sub: subOption.label });
+    onChange({
+      main: selectedMainOption!.label,
+      sub: subOption.label,
+      lat: subOption.lat,
+      lng: subOption.lng,
+    });
     setIsOpen(false);
   };
 
