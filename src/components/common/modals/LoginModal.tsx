@@ -38,7 +38,7 @@ export default function LoginModal({ children, currentPath }: LoginModalProps) {
         <LogoImage src={Logo} alt="인플레이스 로고" />
         <TitleWrapper>
           <Paragraph size="l" weight="bold">
-            인 플레이스
+            인플레이스
           </Paragraph>
         </TitleWrapper>
         <KakaoLoginButton onClick={handleKakaoLogin}>
