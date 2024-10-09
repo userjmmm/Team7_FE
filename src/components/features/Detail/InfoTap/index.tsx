@@ -26,14 +26,14 @@ export default function InfoTap({ facilityInfo, openHour, menuInfos }: Props) {
     <Wrapper>
       <FacilitySign facilityInfo={facilityInfo} />
       <PeriodWrapper>
-        <Paragraph size="m" weight="bold" variant="white">
+        <Paragraph size="s" weight="bold" variant="white">
           운영 시간
         </Paragraph>
         <OpenHour openHour={openHour} />
       </PeriodWrapper>
       <MenuWrapper>
         <TitleContainer>
-          <Text size="m" weight="bold" variant="white">
+          <Text size="s" weight="bold" variant="white">
             메뉴
           </Text>
           <Text size="xxs" weight="normal" variant="grey">
@@ -46,7 +46,7 @@ export default function InfoTap({ facilityInfo, openHour, menuInfos }: Props) {
           <MoreMenuBtn onClick={() => setMoreMenu(!moreMenu)}>{moreMenu ? '메뉴 접기' : '메뉴 더보기'}</MoreMenuBtn>
         </MenuContainer>
       </MenuWrapper>
-      <Paragraph size="m" weight="bold" variant="white">
+      <Paragraph size="s" weight="bold" variant="white">
         지도 보기
       </Paragraph>
       {/* todo - <Map /> */}

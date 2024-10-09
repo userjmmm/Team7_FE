@@ -22,7 +22,7 @@ const GraphContainer = styled.div`
   display: flex;
   align-items: center;
   width: 900px;
-  height: 48px;
+  height: 44px;
   border-radius: 1000px;
   overflow: hidden;
   position: relative;
@@ -38,7 +38,7 @@ const Label = styled.div<{ like: boolean }>`
   position: absolute;
   top: 0;
   ${(props) => (props.like ? 'left: 20px;' : 'right: 20px;')};
-  line-height: 50px;
+  line-height: 40px;
   font-size: 18px;
   color: white;
   font-weight: bold;

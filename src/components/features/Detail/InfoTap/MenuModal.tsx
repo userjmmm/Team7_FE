@@ -35,7 +35,7 @@ export default function MenuModal({ images }: { images: string[] }) {
             src={src}
             alt={`Menu Image ${index + 1}`}
             onClick={() => openModal(index)}
-            style={{ width: '525px' }}
+            style={{ width: '465px' }}
             cursor="pointer"
           />
         ))}
@@ -97,10 +97,10 @@ export default function MenuModal({ images }: { images: string[] }) {
   );
 }
 const ImageWrapper = styled.div`
-  width: 1060px;
+  width: 940px;
   display: flex;
   gap: 10px;
-  height: 320px;
+  height: 260px;
   position: relative;
   svg {
     position: absolute;

@@ -45,6 +45,7 @@ const Overlay = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 100;
 `;
 const Wrapper = styled.div`
   position: fixed;
