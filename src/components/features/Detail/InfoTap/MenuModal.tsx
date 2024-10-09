@@ -31,6 +31,7 @@ export default function MenuModal({ images }: { images: string[] }) {
         <BsCardImage size={26} color="white" onClick={() => openModal(0)} />
         {images.slice(0, 2).map((src, index) => (
           <Image
+            key={src}
             src={src}
             alt={`Menu Image ${index + 1}`}
             onClick={() => openModal(index)}
@@ -81,6 +82,7 @@ export default function MenuModal({ images }: { images: string[] }) {
             <ThumbnailContainer>
               {images.map((src, index) => (
                 <Thumbnail
+                  key={src}
                   src={src}
                   alt={`Thumbnail ${index + 1}`}
                   onClick={() => setCurrentImageIndex(index)}
