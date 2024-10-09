@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useCallback } from 'react';
 import styled from 'styled-components';
 import DropdownMenu from '@/components/Map/DropdownMenu';
 import MapWindow from '@/components/Map/MapWindow';
@@ -7,155 +7,26 @@ import ToggleButton from '@/components/Map/ToggleButton';
 import { Text } from '@/components/common/typography/Text';
 import locationOptions from '@/utils/constants/LocationOptions';
 import influencerOptions from '@/utils/constants/InfluencerOptions';
-import { PlaceData } from '@/types';
-
-const dummyPlaces: PlaceData[] = [
-  {
-    placeId: 1,
-    placeName: '료코',
-    address: {
-      address1: '경상북도',
-      address2: '경주시 황남동',
-      address3: '',
-    },
-    category: '맛집',
-    influencerName: '성시경',
-    longitude: '',
-    latitude: '',
-    likes: true,
-  },
-  {
-    placeId: 2,
-    placeName: '군위식당',
-    address: {
-      address1: '대구광역시',
-      address2: '중구',
-      address3: '',
-    },
-    category: '카페',
-    influencerName: '성시경',
-    longitude: '',
-    latitude: '',
-    likes: false,
-  },
-  {
-    placeId: 3,
-    placeName: '고향돼지국밥',
-    address: {
-      address1: '대전광역시',
-      address2: '서구',
-      address3: '',
-    },
-    category: '맛집',
-    influencerName: '히밥',
-    longitude: '',
-    latitude: '',
-    likes: false,
-  },
-  {
-    placeId: 4,
-    placeName: '걸리버막창 동성로점',
-    address: {
-      address1: '부산광역시',
-      address2: '부산진구',
-      address3: '',
-    },
-    category: '카페',
-    influencerName: '임영웅',
-    longitude: '',
-    latitude: '',
-    likes: false,
-  },
-  {
-    placeId: 5,
-    placeName: '이화국수',
-    address: {
-      address1: '충청남도',
-      address2: '천안시',
-      address3: '',
-    },
-    category: '맛집',
-    influencerName: '백종원',
-    longitude: '',
-    latitude: '',
-    likes: false,
-  },
-  {
-    placeId: 6,
-    placeName: '오복반점',
-    address: {
-      address1: '전라북도',
-      address2: '임실군',
-      address3: '',
-    },
-    category: '카페',
-    influencerName: '히밥',
-    longitude: '',
-    latitude: '',
-    likes: true,
-  },
-  {
-    placeId: 7,
-    placeName: '수성구1번지',
-    address: {
-      address1: '대구광역시',
-      address2: '수성구',
-      address3: '',
-    },
-    category: '맛집',
-    influencerName: '성시경',
-    longitude: '',
-    latitude: '',
-    likes: false,
-  },
-  {
-    placeId: 8,
-    placeName: '마룸모',
-    address: {
-      address1: '서울특별시',
-      address2: '강남구',
-      address3: '',
-    },
-    category: '카페',
-    influencerName: '성시경',
-    longitude: '',
-    latitude: '',
-    likes: false,
-  },
-  {
-    placeId: 9,
-    placeName: '마룸모',
-    address: {
-      address1: '경기도 시흥시',
-      address2: '',
-      address3: '',
-    },
-    category: '맛집',
-    influencerName: '성시경',
-    longitude: '',
-    latitude: '',
-    likes: false,
-  },
-  {
-    placeId: 10,
-    placeName: '마룸모',
-    address: {
-      address1: '강원도 춘천시',
-      address2: '',
-      address3: '',
-    },
-    category: '카페',
-    influencerName: '성시경',
-    longitude: '',
-    latitude: '',
-    likes: false,
-  },
-];
+import { PlaceInfo, LocationData } from '@/types';
+import { useGetPlaceList } from '@/api/hooks/useGetPlaceList';
 
 export default function MapPage() {
   const [selectedInfluencer, setSelectedInfluencer] = useState<string>('');
   const [selectedLocation, setSelectedLocation] = useState<{ main: string; sub?: string }>({ main: '' });
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+  const [mapBounds, setMapBounds] = useState<LocationData>({
+    topLeftLatitude: 0,
+    topLeftLongitude: 0,
+    bottomRightLatitude: 0,
+    bottomRightLongitude: 0
+  });
+
+  const filters = useMemo(() => ({
+    categories: selectedCategories,
+    influencers: selectedInfluencer ? [selectedInfluencer] : [],
+  }), [selectedCategories, selectedInfluencer]);
+
+  const { data: placeList } = useGetPlaceList(mapBounds, filters);
 
   const handleInfluencerChange = (value: string) => {
     setSelectedInfluencer(value);
@@ -169,18 +40,20 @@ export default function MapPage() {
     setSelectedCategories(selected);
   };
 
+  const handleBoundsChange = useCallback((bounds: LocationData) => {
+    setMapBounds(bounds);
+  }, []);
+
   const filteredPlaces = useMemo(() => {
-    return dummyPlaces.filter((place) => {
+    if (!placeList) return [];
+    return placeList.places.filter((place: PlaceInfo) => {
       const locationMatch =
         place.address.address1.includes(selectedLocation.main) &&
         (!selectedLocation.sub || place.address.address2.includes(selectedLocation.sub));
-      const influencerMatch = !selectedInfluencer || place.influencerName === selectedInfluencer;
-      const categoryMatch =
-        selectedCategories.length === 0 || (place.category && selectedCategories.includes(place.category));
 
-      return locationMatch && influencerMatch && categoryMatch;
+      return locationMatch;
     });
-  }, [selectedLocation, selectedInfluencer, selectedCategories]);
+  }, [placeList, selectedLocation]);
 
   return (
     <PageContainer>
@@ -203,7 +76,7 @@ export default function MapPage() {
         />
       </DropdownContainer>
       <ToggleButton options={['맛집', '카페', '팝업']} onSelect={handleCategorySelect} />
-      <MapWindow />
+      <MapWindow onBoundsChange={handleBoundsChange} places={filteredPlaces} />
       <PlaceSection items={filteredPlaces} />
     </PageContainer>
   );

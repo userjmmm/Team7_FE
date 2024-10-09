@@ -1,12 +1,9 @@
 import { useNavigate } from 'react-router-dom';
-
 import styled from 'styled-components';
-
 import PlaceItem from '@/components/Map/PlaceSection/PlaceItem';
+import { PlaceInfo } from '@/types';
 
-import { PlaceData } from '@/types';
-
-export default function PlaceSection({ items }: { items: PlaceData[] }) {
+export default function PlaceSection({ items }: { items: PlaceInfo[] }) {
   const navigate = useNavigate();
 
   const handlePlaceClick = (placeId: number) => {
