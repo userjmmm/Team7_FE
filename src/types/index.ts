@@ -54,12 +54,12 @@ export type PlaceLikes = {
 };
 
 export type FacilityInfo = {
-  wifi: boolean;
-  pet: boolean;
-  parking: boolean;
-  forDisabled: boolean;
-  nursery: boolean;
-  smokingRoom: boolean;
+  wifi?: string;
+  pet?: string;
+  parking?: string;
+  forDisabled?: string;
+  nursery?: string;
+  smokingRoom?: string;
 };
 
 export type Menu = {

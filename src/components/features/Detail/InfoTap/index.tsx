@@ -9,6 +9,7 @@ import MenuList from './MenuList';
 import MenuModal from './MenuModal';
 import OpenHour from './OpenHour';
 import { FacilityInfo, Menu, OpenHourData } from '@/types';
+import { Text } from '@/components/common/typography/Text';
 
 type Props = {
   facilityInfo: FacilityInfo;
@@ -31,9 +32,14 @@ export default function InfoTap({ facilityInfo, openHour, menuInfos }: Props) {
         <OpenHour openHour={openHour} />
       </PeriodWrapper>
       <MenuWrapper>
-        <Paragraph size="m" weight="bold" variant="white">
-          메뉴
-        </Paragraph>
+        <TitleContainer>
+          <Text size="m" weight="bold" variant="white">
+            메뉴
+          </Text>
+          <Text size="xxs" weight="normal" variant="grey">
+            업데이트 {new Date(menuInfos.timeExp).toLocaleDateString()}
+          </Text>
+        </TitleContainer>
         <MenuContainer>
           <MenuModal images={menuInfos.menuImgUrls} />
           <MenuList lists={menuInfos.menuList.slice(0, moreMenu ? menuInfos.menuList.length : 4)} />
@@ -70,4 +76,9 @@ const MoreMenuBtn = styled.button`
   &:hover {
     text-decoration: underline;
   }
+`;
+const TitleContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
 `;
