@@ -30,15 +30,25 @@ export default function Header() {
     <HeaderContainer>
       <LogoContainer>
         <LogoImage src={Logo} alt="인플레이스 로고" />
-        <Text size="l" weight="bold" variant="mint">
-          인 플레이스
+        <Text size="26px" weight="bold" variant="mint">
+          인플레이스
         </Text>
       </LogoContainer>
       <Nav>
         {isLoggedIn ? (
           <>
+            <NavItem to="/map">
+              <Text size="xs" variant="white" weight="normal">
+                지도
+              </Text>
+            </NavItem>
+            <NavItem to="/influencer">
+              <Text size="xs" variant="white" weight="normal">
+                인플루언서
+              </Text>
+            </NavItem>
             <NavItem to="/my">
-              <Text size="s" variant="white" weight="normal">
+              <Text size="xs" variant="white" weight="normal">
                 마이페이지
               </Text>
             </NavItem>
@@ -46,8 +56,13 @@ export default function Header() {
           </>
         ) : (
           <>
+            <NavItem to="/map">
+              <Text size="xs" variant="white" weight="normal">
+                지도
+              </Text>
+            </NavItem>
             <NavItem to="/influencer">
-              <Text size="s" variant="white" weight="normal">
+              <Text size="xs" variant="white" weight="normal">
                 인플루언서
               </Text>
             </NavItem>
@@ -77,8 +92,8 @@ const LogoContainer = styled.div`
 `;
 
 const LogoImage = styled.img`
-  height: 40px;
-  margin-right: 20px;
+  height: 22px;
+  margin-right: 10px;
 `;
 
 const Nav = styled.nav`
