@@ -16,6 +16,7 @@ export const getInfluencer = async () => {
   const response = await fetchInstance.get<InfluencerData[]>(getInfluencerPath());
   return response.data;
 };
+
 export const getCoolVideo = async () => {
   const response = await fetchInstance.get<SpotData[]>(getCoolVideoPath());
   return response.data;
