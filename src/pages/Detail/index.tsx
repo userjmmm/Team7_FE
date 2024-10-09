@@ -11,7 +11,7 @@ import InfoTap from '@/components/features/Detail/InfoTap';
 import ReviewTap from '@/components/features/Detail/ReviewTap';
 import VisitModal from '@/components/features/Detail/VisitModal';
 
-import useExtractYoutubeVideoId from '@/hooks/useExtractYoutube';
+import useExtractYoutubeVideoId from '@/libs/youtube/useExtractYoutube';
 import { useGetPlaceInfo } from '@/api/hooks/useGetPlaceInfo';
 import Loading from '@/components/common/layouts/Loading';
 
@@ -67,7 +67,7 @@ export default function DetailPage() {
           </Suspense>
         )}
       </InfoContainer>
-      {visitModal ? <VisitModal placeName={infoData.placeName} setVisitModal={setVisitModal} /> : null}
+      {visitModal ? <VisitModal placeName={infoData.placeName} onClose={() => setVisitModal(false)} /> : null}
     </Wrapper>
   );
 }

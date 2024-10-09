@@ -5,18 +5,12 @@ import styled from 'styled-components';
 import Button from '@/components/common/Button';
 import { Paragraph } from '@/components/common/typography/Paragraph';
 
-export default function VisitModal({
-  placeName,
-  setVisitModal,
-}: {
-  placeName: string;
-  setVisitModal: React.Dispatch<React.SetStateAction<boolean>>;
-}) {
+export default function VisitModal({ placeName, onClose }: { placeName: string; onClose: () => void }) {
   const handleModalClick = (event: React.MouseEvent) => {
     event.stopPropagation();
   };
   return (
-    <Overlay onClick={() => setVisitModal(false)}>
+    <Overlay onClick={() => onClose()}>
       <Wrapper onClick={(e) => handleModalClick(e)}>
         <DescriptionSection>
           <FcInfo size={180} />
@@ -29,7 +23,7 @@ export default function VisitModal({
           <Button
             variant="blackOutline"
             style={{ fontWeight: 'bold', width: '170px', height: '46px', fontSize: '18px' }}
-            onClick={() => setVisitModal(false)}
+            onClick={() => onClose()}
           >
             취소
           </Button>
