@@ -34,22 +34,22 @@ export const detailHandlers = [
         ],
         menuList: [
           {
-            price: 14000,
+            price: '14000',
             recommend: false,
             menu: '국내산 돼지 안심을 료코만의',
           },
           {
-            price: 3000,
+            price: '3000',
             recommend: false,
             menu: '리조또',
           },
           {
-            price: 14000,
+            price: '14000',
             recommend: false,
             menu: '국내산 돼지 안심을 료코만의 방식으로 숙성 및 조리하여 육즙과 부드러움의 특징을 살린 메뉴',
           },
           {
-            price: 3020,
+            price: '3020',
             recommend: false,
             menu: '리또',
           },

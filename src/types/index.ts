@@ -63,7 +63,7 @@ export type FacilityInfo = {
 };
 
 export type Menu = {
-  price: number;
+  price: string;
   recommend: boolean;
   menu: string;
 };
