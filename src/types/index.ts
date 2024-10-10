@@ -11,7 +11,7 @@ export type InfluencerData = {
   influencerName: string;
   influencerImgUrl: string;
   influencerJob: string;
-  likes?: boolean;
+  likes: boolean;
 };
 
 export type SpotData = {
@@ -88,4 +88,8 @@ export type OpenHourData = {
     weekAndDay: string;
     temporaryHolidays: boolean;
   }[];
+};
+export type RequestInfluencerLike = {
+  influencerId: number;
+  likes: boolean;
 };

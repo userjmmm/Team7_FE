@@ -1,21 +1,50 @@
+/* eslint-disable no-console */
+
 import { Link } from 'react-router-dom';
+import { PiHeartFill, PiHeartLight } from 'react-icons/pi';
 
 import styled from 'styled-components';
 
 import { MdLocationOn } from 'react-icons/md';
+import { useState } from 'react';
 import { Paragraph } from '@/components/common/typography/Paragraph';
 import backCard from '@/assets/images/back-card.png';
 import { InfluencerData } from '@/types';
+import { usePostInfluencerLike } from '@/api/hooks/usePostInfluencerLike';
 
 export default function InfluencerItem({
   influencerId,
   influencerName,
   influencerImgUrl,
   influencerJob,
+  likes,
 }: InfluencerData) {
+  const [isLike, setIsLike] = useState(likes);
+  const { mutate: postLike } = usePostInfluencerLike();
+  const handleClickLike = (event: React.MouseEvent<HTMLDivElement>) => {
+    event.stopPropagation();
+    event.preventDefault();
+    const newLikeStatus = !isLike;
+    setIsLike(newLikeStatus);
+    console.log('New like status:', newLikeStatus);
+    postLike(
+      { influencerId, likes: newLikeStatus },
+      {
+        onSuccess: () => {
+          console.log('성공');
+        },
+        onError: (error) => {
+          console.error('Error:', error);
+        },
+      },
+    );
+  };
   return (
     <Wrapper to={`/influencer/${influencerId}`}>
       <ImageContainer>
+        <LikeIcon onClick={(e) => handleClickLike(e)}>
+          {isLike ? <PiHeartFill color="#fe7373" size={32} /> : <PiHeartLight color="white" size={32} />}
+        </LikeIcon>
         <FrontImage src={influencerImgUrl} alt={influencerName} />
         <BackImageWrapper>
           <MdLocationOn size={50} color="#55EBFF" />
@@ -48,11 +77,16 @@ const ImageContainer = styled.div`
   height: 208px;
   position: relative;
   border-radius: 6px;
-  transition: transform 0.8s;
-  transform-style: preserve-3d;
+  overflow: hidden;
 
-  ${Wrapper}:hover & {
-    transform: rotateY(180deg);
+  &:hover {
+    & > div:nth-child(2) {
+      opacity: 0;
+    }
+
+    & > div:last-child {
+      opacity: 1;
+    }
   }
 `;
 
@@ -62,10 +96,10 @@ const FrontImage = styled.img`
   left: 0;
   width: 100%;
   height: 100%;
-  backface-visibility: hidden;
   object-fit: cover;
   margin-bottom: 8px;
   border-radius: 6px;
+  transition: opacity 0.6s ease-in-out;
 `;
 
 const BackImageWrapper = styled.div`
@@ -73,15 +107,23 @@ const BackImageWrapper = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  position: absolute;
   width: 100%;
   height: 100%;
-  position: absolute;
   top: 0;
   left: 0;
   background-image: url(${backCard});
   background-size: cover;
   background-position: center;
-  transform: rotateY(180deg);
-  backface-visibility: hidden;
-  border-radius: 6px;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+`;
+const LikeIcon = styled.div`
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  right: 10px;
+  top: 12px;
+  z-index: 100;
+  cursor: pointer;
 `;
