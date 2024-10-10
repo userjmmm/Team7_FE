@@ -40,6 +40,23 @@ export type PlaceData = {
   latitude?: string;
   likes: boolean;
 };
+
+export type LocationData = {
+  topLeftLongitude: number;
+  topLeftLatitude: number;
+  bottomRightLongitude: number;
+  bottomRightLatitude: number;
+};
+
+export type FilterParams = {
+  categories: string[];
+  influencers: string[];
+};
+
+export type PlaceList = {
+  places: PlaceInfo[];
+};
+
 export type PlaceInfo = {
   placeId: number;
   placeName: string;

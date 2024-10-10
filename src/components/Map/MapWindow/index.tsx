@@ -1,31 +1,83 @@
-import { useState } from 'react';
-import { FaUndoAlt } from 'react-icons/fa';
+import { useState, useCallback, useEffect, useRef } from 'react';
 import { Map, MapMarker } from 'react-kakao-maps-sdk';
-
 import styled from 'styled-components';
-
+import { TbCurrentLocation } from 'react-icons/tb';
 import Button from '@/components/common/Button';
+import { LocationData } from '@/types';
 
-export default function MapWindow() {
-  const [map, setMap] = useState<kakao.maps.Map | null>(null);
-  const center = {
-    lat: 35.889062,
-    lng: 128.610283,
-  };
+interface MapWindowProps {
+  onBoundsChange: (bounds: LocationData) => void;
+  center: { lat: number; lng: number };
+}
 
-  const handleSearchNearby = () => {
-    // 변경 예정
-    if (map) {
-      const currentCenter = map.getCenter();
-      console.log('현재 중심 좌표:', currentCenter.getLat(), currentCenter.getLng());
+export default function MapWindow({ onBoundsChange, center }: MapWindowProps) {
+  const mapRef = useRef<kakao.maps.Map | null>(null);
+  const [mapCenter, setMapCenter] = useState(center);
+  const [userLocation, setUserLocation] = useState<{ lat: number; lng: number } | null>(null);
+
+  const updateBounds = useCallback(() => {
+    if (!mapRef.current) return;
+
+    const bounds = mapRef.current.getBounds();
+    const newBounds: LocationData = {
+      topLeftLatitude: bounds.getNorthEast().getLat(),
+      topLeftLongitude: bounds.getSouthWest().getLng(),
+      bottomRightLatitude: bounds.getSouthWest().getLat(),
+      bottomRightLongitude: bounds.getNorthEast().getLng(),
+    };
+    onBoundsChange(newBounds);
+  }, [onBoundsChange]);
+
+  const handleSearchNearby = useCallback(() => {
+    updateBounds();
+  }, [updateBounds]);
+
+  const handleResetCenter = useCallback(() => {
+    if (mapRef.current && userLocation) {
+      mapRef.current.setCenter(new kakao.maps.LatLng(userLocation.lat, userLocation.lng));
+      updateBounds();
     }
+  }, [userLocation, updateBounds]);
+
+  const handleCenterChanged = (map: kakao.maps.Map) => {
+    const newCenter = map.getCenter();
+    setMapCenter({
+      lat: newCenter.getLat(),
+      lng: newCenter.getLng(),
+    });
   };
 
-  const handleResetCenter = () => {
-    if (map) {
-      map.setCenter(new kakao.maps.LatLng(center.lat, center.lng));
+  useEffect(() => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const newCenter = {
+            lat: position.coords.latitude,
+            lng: position.coords.longitude,
+          };
+          setMapCenter(newCenter);
+          setUserLocation(newCenter);
+          if (mapRef.current) {
+            mapRef.current.setCenter(new kakao.maps.LatLng(newCenter.lat, newCenter.lng));
+            updateBounds();
+          }
+        },
+        (err) => {
+          console.error('Geolocation error:', err);
+        },
+      );
+    } else {
+      console.warn('Geolocation is not supported by this browser.');
     }
-  };
+  }, [updateBounds]);
+
+  useEffect(() => {
+    setMapCenter(center);
+    if (mapRef.current) {
+      mapRef.current.setCenter(new kakao.maps.LatLng(center.lat, center.lng));
+      updateBounds();
+    }
+  }, [center, updateBounds]);
 
   return (
     <MapContainer>
@@ -34,12 +86,23 @@ export default function MapWindow() {
           주변 찾기
         </Button>
       </ButtonContainer>
-      <Map center={center} style={{ width: '100%', height: '100%' }} level={4} onCreate={setMap}>
-        {map && (
+      <Map
+        center={mapCenter}
+        style={{ width: '100%', height: '100%' }}
+        level={4}
+        onCreate={(map) => {
+          mapRef.current = map;
+        }}
+        onCenterChanged={handleCenterChanged}
+        onZoomChanged={updateBounds}
+        onDragEnd={updateBounds}
+      >
+        {userLocation && (
           <MapMarker
-            position={{
-              lat: map.getCenter().getLat(),
-              lng: map.getCenter().getLng(),
+            position={userLocation}
+            image={{
+              src: 'https://i.ibb.co/KKMSvsJ/pngwing-com.png',
+              size: { width: 100, height: 80 },
             }}
           />
         )}
@@ -47,11 +110,11 @@ export default function MapWindow() {
       <ResetButtonContainer>
         <Button
           onClick={handleResetCenter}
-          theme="mint"
+          theme="white"
           size="small"
-          style={{ width: '40px', height: '40px', borderRadius: '50%' }}
+          style={{ width: '30px', height: '30px', boxShadow: '0px 2px 2px #707070' }}
         >
-          <FaUndoAlt />
+          <TbCurrentLocation size={20} />
         </Button>
       </ResetButtonContainer>
     </MapContainer>

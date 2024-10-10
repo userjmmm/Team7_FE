@@ -1,17 +1,14 @@
 import { FaHeart } from 'react-icons/fa';
-
 import styled from 'styled-components';
-
 import { Text } from '@/components/common/typography/Text';
+import { PlaceInfo } from '@/types';
 
-import { PlaceData } from '@/types';
-
-interface PlaceItemProps extends PlaceData {
+interface PlaceItemProps extends PlaceInfo {
   onClick: () => void;
 }
 
 export default function PlaceItem({ placeId, placeName, address, influencerName, likes, onClick }: PlaceItemProps) {
-  const getFullAddress = (addr: PlaceData['address']) => {
+  const getFullAddress = (addr: PlaceInfo['address']) => {
     return [addr.address1, addr.address2, addr.address3].filter(Boolean).join(' ');
   };
 
