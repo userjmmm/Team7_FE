@@ -1,10 +1,30 @@
+import { useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import PlaceItem from '@/components/Map/PlaceSection/PlaceItem';
-import { PlaceInfo } from '@/types';
+import { PlaceInfo, LocationData } from '@/types';
+import { useGetPlaceList } from '@/api/hooks/useGetPlaceList';
 
-export default function PlaceSection({ items }: { items: PlaceInfo[] }) {
+interface PlaceSectionProps {
+  mapBounds: LocationData;
+  filters: {
+    categories: string[];
+    influencers: string[];
+  };
+}
+
+export default function PlaceSection({ mapBounds, filters }: PlaceSectionProps) {
   const navigate = useNavigate();
+  const { data: placeList } = useGetPlaceList(mapBounds, filters);
+
+  const filteredPlaces = useMemo(() => {
+    if (!placeList) return [];
+    return placeList.places.filter((place: PlaceInfo) => {
+      const categoryMatch = filters.categories.length === 0 || filters.categories.includes(place.category);
+      const influencerMatch = filters.influencers.length === 0 || filters.influencers.includes(place.influencerName);
+      return categoryMatch && influencerMatch;
+    });
+  }, [placeList, filters]);
 
   const handlePlaceClick = (placeId: number) => {
     navigate(`/detail/${placeId}`);
@@ -12,9 +32,9 @@ export default function PlaceSection({ items }: { items: PlaceInfo[] }) {
 
   return (
     <ListContainer>
-      {items.map((place) => {
-        return <PlaceItem key={place.placeId} {...place} onClick={() => handlePlaceClick(place.placeId)} />;
-      })}
+      {filteredPlaces.map((place) => (
+        <PlaceItem key={place.placeId} {...place} onClick={() => handlePlaceClick(place.placeId)} />
+      ))}
     </ListContainer>
   );
 }
