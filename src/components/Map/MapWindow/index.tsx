@@ -102,8 +102,8 @@ export default function MapWindow({ onBoundsChange, places, center }: MapWindowP
           <MapMarker
             position={userLocation}
             image={{
-              src: 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png',
-              size: { width: 24, height: 35 },
+              src: 'https://i.ibb.co/KKMSvsJ/pngwing-com.png',
+              size: { width: 100, height: 80 },
             }}
           />
         )}
