@@ -1,7 +1,7 @@
 import { useState, useCallback, useEffect, useRef } from 'react';
-import { FaUndoAlt } from 'react-icons/fa';
 import { Map, MapMarker } from 'react-kakao-maps-sdk';
 import styled from 'styled-components';
+import { TbCurrentLocation } from 'react-icons/tb';
 import Button from '@/components/common/Button';
 import { LocationData, PlaceInfo } from '@/types';
 
@@ -117,11 +117,11 @@ export default function MapWindow({ onBoundsChange, places, center }: MapWindowP
       <ResetButtonContainer>
         <Button
           onClick={handleResetCenter}
-          theme="mint"
+          theme="white"
           size="small"
-          style={{ width: '40px', height: '40px', borderRadius: '50%' }}
+          style={{ width: '30px', height: '30px', boxShadow: '0px 2px 2px #707070' }}
         >
-          <FaUndoAlt />
+          <TbCurrentLocation size={20} />
         </Button>
       </ResetButtonContainer>
     </MapContainer>
