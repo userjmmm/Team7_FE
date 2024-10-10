@@ -71,7 +71,6 @@ const Sign = styled.div`
   margin: 4px;
 `;
 
-
 const SignWrapper = styled.div`
   display: flex;
   flex-direction: column;

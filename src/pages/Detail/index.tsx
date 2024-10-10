@@ -14,6 +14,7 @@ import VisitModal from '@/components/features/Detail/VisitModal';
 import useExtractYoutubeVideoId from '@/libs/youtube/useExtractYoutube';
 import { useGetPlaceInfo } from '@/api/hooks/useGetPlaceInfo';
 import Loading from '@/components/common/layouts/Loading';
+
 export default function DetailPage() {
   const [activeTab, setActiveTab] = useState<'info' | 'review'>('info');
   const [visitModal, setVisitModal] = useState(false);

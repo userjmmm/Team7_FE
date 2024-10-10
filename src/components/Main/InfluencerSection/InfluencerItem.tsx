@@ -1,5 +1,3 @@
-/* eslint-disable no-console */
-
 import { Link } from 'react-router-dom';
 import { PiHeartFill, PiHeartLight } from 'react-icons/pi';
 
