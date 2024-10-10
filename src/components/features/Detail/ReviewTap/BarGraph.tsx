@@ -39,6 +39,7 @@ const Label = styled.div<{ $like: boolean }>`
   top: 0;
   ${($like) => ($like ? 'left: 20px;' : 'right: 20px;')};
   line-height: 40px;
+
   font-size: 18px;
   color: white;
   font-weight: bold;

@@ -24,14 +24,43 @@ export type SpotData = {
   };
 };
 
+export type AddressData = {
+  address1: string;
+  address2: string;
+  address3: string;
+};
+
+export type PlaceData = {
+  placeId: number;
+  placeName: string;
+  address: AddressData;
+  category?: string;
+  influencerName: string;
+  longitude?: string;
+  latitude?: string;
+  likes: boolean;
+};
+
+export type LocationData = {
+  topLeftLongitude: number;
+  topLeftLatitude: number;
+  bottomRightLongitude: number;
+  bottomRightLatitude: number;
+};
+
+export type FilterParams = {
+  categories: string[];
+  influencers: string[];
+};
+
+export type PlaceList = {
+  places: PlaceInfo[];
+};
+
 export type PlaceInfo = {
   placeId: number;
   placeName: string;
-  address: {
-    address1: string;
-    address2: string;
-    address3: string;
-  };
+  address: AddressData;
   category: string;
   influencerName: string;
   longitude: string;

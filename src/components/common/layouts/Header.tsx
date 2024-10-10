@@ -28,12 +28,14 @@ export default function Header() {
 
   return (
     <HeaderContainer>
-      <LogoContainer>
-        <LogoImage src={Logo} alt="인플레이스 로고" />
-        <Text size="26px" weight="bold" variant="mint">
-          인플레이스
-        </Text>
-      </LogoContainer>
+      <LogoLink to="/">
+        <LogoContainer>
+          <LogoImage src={Logo} alt="인플레이스 로고" />
+          <Text size="l" weight="bold" variant="mint">
+            인플레이스
+          </Text>
+        </LogoContainer>
+      </LogoLink>
       <Nav>
         {isLoggedIn ? (
           <>
@@ -75,6 +77,7 @@ export default function Header() {
     </HeaderContainer>
   );
 }
+
 export const HEADER_HEIGHT = 80;
 
 const HeaderContainer = styled.header`
@@ -84,6 +87,12 @@ const HeaderContainer = styled.header`
   padding: 20px;
   height: 80px;
   box-sizing: border-box;
+`;
+
+const LogoLink = styled(Link)`
+  text-decoration: none;
+  display: flex;
+  align-items: center;
 `;
 
 const LogoContainer = styled.div`
