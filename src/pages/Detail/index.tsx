@@ -14,7 +14,6 @@ import VisitModal from '@/components/features/Detail/VisitModal';
 import useExtractYoutubeVideoId from '@/libs/youtube/useExtractYoutube';
 import { useGetPlaceInfo } from '@/api/hooks/useGetPlaceInfo';
 import Loading from '@/components/common/layouts/Loading';
-
 export default function DetailPage() {
   const [activeTab, setActiveTab] = useState<'info' | 'review'>('info');
   const [visitModal, setVisitModal] = useState(false);
@@ -61,7 +60,6 @@ export default function DetailPage() {
           리뷰
         </Tap>
       </TapContainer>
-
       <InfoContainer>
         {activeTab === 'info' ? (
           <InfoTap facilityInfo={infoData.facilityInfo} openHour={infoData.openHour} menuInfos={infoData.menuInfos} />
