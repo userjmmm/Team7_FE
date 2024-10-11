@@ -102,8 +102,8 @@ export default function MapWindow({ onBoundsChange, center, places }: MapWindowP
           <MapMarker
             position={userLocation}
             image={{
-              src: 'https://i.ibb.co/KKMSvsJ/pngwing-com.png',
-              size: { width: 100, height: 80 },
+              src: 'https://i.ibb.co/4gGFjRx/circle.png',
+              size: { width: 24, height: 24 },
             }}
           />
         )}
