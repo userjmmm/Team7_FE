@@ -26,7 +26,9 @@ export default function PlaceSection({ mapBounds, filters, onPlacesUpdate }: Pla
       const influencerMatch = filters.influencers.length === 0 || filters.influencers.includes(place.influencerName);
       const locationMatch = (() => {
         if (!filters.location.main) return true;
-        const mainMatch = place.address.address1.includes(filters.location.main) || place.address.address2.includes(filters.location.main);
+        const mainMatch =
+          place.address.address1.includes(filters.location.main) ||
+          place.address.address2.includes(filters.location.main);
         const subMatch = filters.location.sub
           ? place.address.address2.includes(filters.location.sub) ||
             (place.address.address3 && place.address.address3.includes(filters.location.sub))

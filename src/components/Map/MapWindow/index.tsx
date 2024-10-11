@@ -108,10 +108,7 @@ export default function MapWindow({ onBoundsChange, center, places }: MapWindowP
           />
         )}
         {places.map((place) => (
-          <MapMarker
-            key={place.placeId}
-            position={{ lat: place.latitude, lng: place.longitude }}
-          />
+          <MapMarker key={place.placeId} position={{ lat: place.latitude, lng: place.longitude }} />
         ))}
       </Map>
       <ResetButtonContainer>
