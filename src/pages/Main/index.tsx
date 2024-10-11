@@ -3,12 +3,14 @@ import BaseLayout from '@/components/Main/BaseLayout';
 import MainBanner from '@/components/Main/MainBanner';
 
 import { useGetMain } from '@/api/hooks/useGetMain';
+import SearchBar from '@/components/common/SearchBar';
 
 export default function MainPage() {
   const [{ data: bannerData }, { data: influencersData }, { data: coolVideoData }, { data: newVideoData }] =
     useGetMain();
   return (
     <Wrapper>
+      <SearchBar />
       <MainBanner items={bannerData} />
       <BaseLayout
         type="influencer"

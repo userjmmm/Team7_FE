@@ -11,7 +11,7 @@ export type InfluencerData = {
   influencerName: string;
   influencerImgUrl: string;
   influencerJob: string;
-  likes?: boolean;
+  likes: boolean;
 };
 
 export type SpotData = {
@@ -40,6 +40,23 @@ export type PlaceData = {
   latitude?: string;
   likes: boolean;
 };
+
+export type LocationData = {
+  topLeftLongitude: number;
+  topLeftLatitude: number;
+  bottomRightLongitude: number;
+  bottomRightLatitude: number;
+};
+
+export type FilterParams = {
+  categories: string[];
+  influencers: string[];
+};
+
+export type PlaceList = {
+  places: PlaceInfo[];
+};
+
 export type PlaceInfo = {
   placeId: number;
   placeName: string;
@@ -66,16 +83,16 @@ export type PlaceLikes = {
 };
 
 export type FacilityInfo = {
-  wifi: boolean;
-  pet: boolean;
-  parking: boolean;
-  forDisabled: boolean;
-  nursery: boolean;
-  smokingRoom: boolean;
+  wifi?: string;
+  pet?: string;
+  parking?: string;
+  forDisabled?: string;
+  nursery?: string;
+  smokingRoom?: string;
 };
 
 export type Menu = {
-  price: number;
+  price: string;
   recommend: boolean;
   menu: string;
 };
@@ -100,4 +117,8 @@ export type OpenHourData = {
     weekAndDay: string;
     temporaryHolidays: boolean;
   }[];
+};
+export type RequestInfluencerLike = {
+  influencerId: number;
+  likes: boolean;
 };
