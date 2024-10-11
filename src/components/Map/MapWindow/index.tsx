@@ -3,14 +3,15 @@ import { Map, MapMarker } from 'react-kakao-maps-sdk';
 import styled from 'styled-components';
 import { TbCurrentLocation } from 'react-icons/tb';
 import Button from '@/components/common/Button';
-import { LocationData } from '@/types';
+import { LocationData, PlaceInfo } from '@/types';
 
 interface MapWindowProps {
   onBoundsChange: (bounds: LocationData) => void;
   center: { lat: number; lng: number };
+  places: PlaceInfo[];
 }
 
-export default function MapWindow({ onBoundsChange, center }: MapWindowProps) {
+export default function MapWindow({ onBoundsChange, center, places }: MapWindowProps) {
   const mapRef = useRef<kakao.maps.Map | null>(null);
   const [mapCenter, setMapCenter] = useState(center);
   const [userLocation, setUserLocation] = useState<{ lat: number; lng: number } | null>(null);
@@ -106,6 +107,12 @@ export default function MapWindow({ onBoundsChange, center }: MapWindowProps) {
             }}
           />
         )}
+        {places.map((place) => (
+          <MapMarker
+            key={place.placeId}
+            position={{ lat: place.latitude, lng: place.longitude }}
+          />
+        ))}
       </Map>
       <ResetButtonContainer>
         <Button
