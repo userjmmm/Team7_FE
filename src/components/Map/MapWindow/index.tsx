@@ -82,7 +82,7 @@ export default function MapWindow({ onBoundsChange, center }: MapWindowProps) {
   return (
     <MapContainer>
       <ButtonContainer>
-        <Button onClick={handleSearchNearby} theme="mint" size="small" style={{ margin: '5px', fontSize: '16px' }}>
+        <Button onClick={handleSearchNearby} variant="mint" size="small" style={{ margin: '5px', fontSize: '16px' }}>
           주변 찾기
         </Button>
       </ButtonContainer>
@@ -90,7 +90,7 @@ export default function MapWindow({ onBoundsChange, center }: MapWindowProps) {
         center={mapCenter}
         style={{ width: '100%', height: '100%' }}
         level={4}
-        onCreate={(map) => {
+        onCreate={(map: kakao.maps.Map | null) => {
           mapRef.current = map;
         }}
         onCenterChanged={handleCenterChanged}
@@ -110,7 +110,7 @@ export default function MapWindow({ onBoundsChange, center }: MapWindowProps) {
       <ResetButtonContainer>
         <Button
           onClick={handleResetCenter}
-          theme="white"
+          variant="white"
           size="small"
           style={{ width: '30px', height: '30px', boxShadow: '0px 2px 2px #707070' }}
         >

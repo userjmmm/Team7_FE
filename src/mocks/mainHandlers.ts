@@ -148,7 +148,7 @@ export const mainHandlers = [
         influencerName: '아이유',
         influencerImgUrl: 'https://via.placeholder.com/100',
         influencerJob: '가수',
-        likes: true,
+        likes: false,
       },
       {
         influencerId: 4,
@@ -162,14 +162,14 @@ export const mainHandlers = [
         influencerName: '정해인',
         influencerImgUrl: 'https://via.placeholder.com/100',
         influencerJob: '배우',
-        likes: true,
+        likes: false,
       },
       {
         influencerId: 7,
         influencerName: '정해인',
         influencerImgUrl: 'https://via.placeholder.com/100',
         influencerJob: '배우',
-        likes: true,
+        likes: false,
       },
       {
         influencerId: 8,
@@ -183,7 +183,7 @@ export const mainHandlers = [
         influencerName: '정해인',
         influencerImgUrl: 'https://via.placeholder.com/100',
         influencerJob: '배우',
-        likes: true,
+        likes: false,
       },
     ]);
   }),
