@@ -34,8 +34,8 @@ export default function MapPage() {
     [selectedCategories, selectedInfluencer, selectedLocation],
   );
 
-  const handleInfluencerChange = (value: string) => {
-    setSelectedInfluencer(value);
+  const handleInfluencerChange = (value: { main: string; sub?: string; lat?: number; lng?: number }) => {
+    setSelectedInfluencer(value.main);
   };
 
   const handleLocationChange = (value: { main: string; sub?: string; lat?: number; lng?: number }) => {
@@ -77,7 +77,7 @@ export default function MapPage() {
         />
         <DropdownMenu
           options={influencerOptions}
-          onChange={(value) => handleInfluencerChange(value.main)}
+          onChange={handleInfluencerChange}
           placeholder="인플루언서"
           type="influencer"
         />
