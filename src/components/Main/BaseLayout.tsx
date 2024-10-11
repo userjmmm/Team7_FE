@@ -21,9 +21,9 @@ export default function BaseLayout({ type, prevSubText = '', mainText, SubText, 
   return (
     <Container>
       <TitleContainer>
-        <Text size="l" weight="bold">
+        <Text size="m" weight="bold">
           {prevSubText || ''}
-          <Text size="xxl" weight="bold" variant="mint">
+          <Text size="28px" weight="bold" variant="mint">
             {mainText}
           </Text>
           {SubText}
